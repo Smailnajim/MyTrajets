@@ -1,5 +1,6 @@
-const successHandler = (res, message = "Success", data) => {
-    return res.status(200).json({
+const successHandler = (res, statusCode, message = "Success", data) => {
+    const status = statusCode ?? 200;
+    return res.status(status).json({
         success: true,
         message,
         data
