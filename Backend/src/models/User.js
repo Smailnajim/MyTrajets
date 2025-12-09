@@ -6,23 +6,23 @@ const userSchema = new Schema({
     roleId: {
         type: Types.ObjectId, 
         ref: 'Role',
-        require: true
+        required: true
     },
     firstName: {
         type: String,
-        require: true
+        required: true
     },
     lastName: {
         type: String,
-        require: true
+        required: true
     },
     email: {
         type: String,
-        require: true
+        required: true
     },
     password: {
         type: String,
-        require: true
+        required: true
     },
     etat: {
         type: String,
@@ -30,6 +30,14 @@ const userSchema = new Schema({
         default: "registered"
     }
 }, {collection: 'users', timestamps: true });
+
+
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
 
 userSchema.methods.comparePassword = function(password) {
     return bcrypt.compare(password, this.password);
