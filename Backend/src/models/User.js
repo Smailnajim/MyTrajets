@@ -1,5 +1,6 @@
 import {Types, model, Schema} from 'mongoose';
 import userEtat from '../enums/userEtat.js';
+import bcrypt from "bcrypt";
 
 const userSchema = new Schema({
     roleId: {
@@ -30,7 +31,9 @@ const userSchema = new Schema({
     }
 }, {collection: 'users', timestamps: true });
 
-
+userSchema.methods.comparePassword = function(password) {
+    return bcrypt.compare(password, this.password);
+}
 
 const User = model("User", userSchema);
 export default User;
