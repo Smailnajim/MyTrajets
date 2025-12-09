@@ -9,7 +9,7 @@ router.get('/', (req, res)=>{
 })
 
 router.post('/users/register', tryCatch((req, res)=>{
-    successHandler(res, 200, "use post to create user successfly.", undefined);
+    successHandler(res, 200, "use post to create user successfly!", undefined);
 }));
 
 export default router;
