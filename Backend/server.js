@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import connectionDB from "./src/config/db.js";
 import router from "./src/routes/api.js";
+import errorHandler from "./src/middlewares/errorHandler.js";
 
 connectionDB();
 
@@ -21,8 +22,10 @@ app.get('/', (req, res) => {
 
 app.use('/api', router);
 
+// Error Handler Middleware (must be last)
+app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`🚀🏁▶️🚩 server is runing on : http://localhost:${port}`);
 })
