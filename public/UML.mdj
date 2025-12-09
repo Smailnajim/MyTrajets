@@ -146,24 +146,6 @@
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGa/ioPSgwe9Jk=",
-											"_parent": {
-												"$ref": "AAAAAAGa/dnYMKB8cKo="
-											},
-											"model": {
-												"$ref": "AAAAAAGa/ioPQgwbFBc="
-											},
-											"font": "Arial;13;0",
-											"parentStyle": true,
-											"left": 701,
-											"top": 165,
-											"width": 119,
-											"height": 13,
-											"text": "+entrepriseId: string",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGa/isNIAwrCS4=",
 											"_parent": {
 												"$ref": "AAAAAAGa/dnYMKB8cKo="
@@ -174,7 +156,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 701,
-											"top": 180,
+											"top": 165,
 											"width": 119,
 											"height": 13,
 											"text": "+firstName: string",
@@ -192,7 +174,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 701,
-											"top": 195,
+											"top": 180,
 											"width": 119,
 											"height": 13,
 											"text": "+lastName: string",
@@ -210,7 +192,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 701,
-											"top": 210,
+											"top": 195,
 											"width": 119,
 											"height": 13,
 											"text": "+email: string",
@@ -228,7 +210,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 701,
-											"top": 225,
+											"top": 210,
 											"width": 119,
 											"height": 13,
 											"text": "+password: string",
@@ -246,7 +228,7 @@
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 701,
-											"top": 240,
+											"top": 225,
 											"width": 119,
 											"height": 13,
 											"text": "+etat: enum",
@@ -258,7 +240,7 @@
 									"left": 696,
 									"top": 145,
 									"width": 129,
-									"height": 113
+									"height": 98
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -272,7 +254,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 696,
-									"top": 258,
+									"top": 243,
 									"width": 129,
 									"height": 10
 								},
@@ -4793,15 +4775,6 @@
 								"$ref": "AAAAAAGa/dnYLqB0o6w="
 							},
 							"name": "roleId",
-							"type": "string"
-						},
-						{
-							"_type": "UMLAttribute",
-							"_id": "AAAAAAGa/ioPQgwbFBc=",
-							"_parent": {
-								"$ref": "AAAAAAGa/dnYLqB0o6w="
-							},
-							"name": "entrepriseId",
 							"type": "string"
 						},
 						{

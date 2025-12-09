@@ -1,0 +1,1 @@
+export default ["registered", "authorise", "blocked"];
