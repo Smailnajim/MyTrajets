@@ -1,23 +1,23 @@
-import User from "../models/User";
+import User from "../models/User.js";
 
 
-const createUser = async ({roleId, firstName, lastName, email, password, roleId }) => {
-    const user = new User({ 
+const createUser = async ({ roleId, firstName, lastName, email, password }) => {
+    const user = new User({
         roleId,
-        firstName, 
+        firstName,
         lastName,
-        email, 
-        password, 
+        email,
+        password,
     });
 
     return await user.save();
 }
 
-const findOneByEmail = async ({email}) => {
-    return await User.findOne({email});
+const findOneByEmail = async ({ email }) => {
+    return await User.findOne({ email });
 }
 
-const findOneById = async ({id}) => {
+const findOneById = async ({ id }) => {
     return await User.findById(id);
 }
 
