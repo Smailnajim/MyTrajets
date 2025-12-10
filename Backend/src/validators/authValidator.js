@@ -27,7 +27,8 @@ export const loginValidation = [
         .isEmail().withMessage('Invalid email format')
         .normalizeEmail(),
     body('password')
-        .notEmpty().withMessage('Password is required'),
+        .notEmpty().withMessage('Password is required')
+        .isLength({min: 6}).withMessage('Password must be at least 6 characters'),
 ];
 
 export const validate = (req, res, next) => {
