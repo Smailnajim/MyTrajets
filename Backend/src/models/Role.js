@@ -1,11 +1,12 @@
 import { model, Schema } from 'mongoose';
+import roles from '../enums/roles.js';
 
 const roleSchema = new Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
-        trim: true
+        enum: roles,
+        default: "chauffeur"
     },
     permissions: [{
         type: String,
