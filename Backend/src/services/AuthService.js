@@ -85,8 +85,21 @@ const refreshTokenService = async (refreshToken) => {
     };
 };
 
+const acceptUserService = async (userId) => {
+    const user = await Users.findOneById({ id: userId });
+    if(!user){
+        throw createError("User not found", 404);
+    }
+    if(user.etat === "authorise"){
+        throw createError("User is already authorised", 400);
+    }
+    const updatedUser = await Users.updateUserStatus({ id: userId, etat: "authorise"});
+    return updatedUser;
+};
+
 export default {
     registerService,
     loginService,
-    refreshTokenService
+    refreshTokenService,
+    acceptUserService
 };

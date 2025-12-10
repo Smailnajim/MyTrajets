@@ -53,3 +53,13 @@ export const refreshToken = tryCatch(async (req, res, next) => {
         accessToken: data.accessToken
     });
 });
+
+/**
+ * Accept/Authorize user (Admin only)
+ * @route PATCH /api/users/:id/accept
+ */
+export const acceptUser = tryCatch(async (req, res, next) => {
+    const { id } = req.params;
+    const user = await AuthService.acceptUserService(id);
+    return successHandler(res, 200, "User authorized successfully", user);
+});

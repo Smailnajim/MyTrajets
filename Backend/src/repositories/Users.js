@@ -21,8 +21,13 @@ const findOneById = async ({ id }) => {
     return await User.findById(id);
 }
 
+const updateUserStatus = async ({ id, etat }) => {
+    return await User.findByIdAndUpdate(id, { etat }, { new: true }).select('-password');
+}
+
 export default {
     createUser,
     findOneByEmail,
-    findOneById
+    findOneById,
+    updateUserStatus
 };
