@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import Users from "../repositories/Users.js";
 import createError from "../utils/createError.js";
-import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/token.js";
 import Roles from "../repositories/Roles.js";
 
 
@@ -64,7 +64,29 @@ const loginService = async ({ email, password }) => {
     };
 };
 
+const refreshTokenService = async (refreshToken) => {
+    if(!refreshToken){
+        throw createError("Refresh token is required", 401);
+    }
+    const decoded = verifyRefreshToken(refreshToken);
+    if(!decoded){
+        throw createError("Invalid refresh token", 401);
+    }
+    const user = await Users.findOneById({id: decoded.userId});
+    if(!user){
+        throw createError("User not found", 404);
+    }
+    const newAccessToken = generateAccessToken(user);
+    const newRefreshToken = generateRefreshToken(user);
+
+    return {
+        accessToken: newAccessToken,
+        refreshToken: newRefreshToken
+    };
+};
+
 export default {
     registerService,
-    loginService
+    loginService,
+    refreshTokenService
 };

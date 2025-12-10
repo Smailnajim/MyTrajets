@@ -17,7 +17,12 @@ const findOneByEmail = async ({email}) => {
     return await User.findOne({email});
 }
 
+const findOneById = async ({id}) => {
+    return await User.findById(id);
+}
+
 export default {
     createUser,
-    findOneByEmail
+    findOneByEmail,
+    findOneById
 };

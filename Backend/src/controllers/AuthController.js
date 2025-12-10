@@ -33,3 +33,23 @@ export const login = tryCatch(async (req, res, next) => {
         accessToken: data.accessToken
     });
 });
+
+/**
+ * Refresh access token
+ * @route POST /api/users/refresh-token
+ */
+export const refreshToken = tryCatch(async (req, res, next) => {
+    const token = req.cookies.refreshToken;
+    const data = await AuthService.refreshTokenService(token);
+
+    res.cookie("refreshToken", data.refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+    return successHandler(res, 200, "Token refreshed successfully", {
+        accessToken: data.accessToken
+    });
+});

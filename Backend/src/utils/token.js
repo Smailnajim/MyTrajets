@@ -15,3 +15,7 @@ export const generateRefreshToken = (user) => {
         { expiresIn: "7d" }
     );
 };
+
+export const verifyRefreshToken = (refreshToken) => {
+    return jwt.verify(refreshToken, process.env.TOKEN_SECRET);
+};
