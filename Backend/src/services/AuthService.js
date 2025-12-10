@@ -5,7 +5,7 @@ import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 import Roles from "../repositories/Roles.js";
 
 
-export const registerService = async ({ firstName, lastName, email, password, roleId }) => {
+const registerService = async ({ firstName, lastName, email, password, roleId }) => {
     
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -13,8 +13,6 @@ export const registerService = async ({ firstName, lastName, email, password, ro
     }
     const chauffeurRole = await Roles.findOne({name: "chauffeur"});
     if (!chauffeurRole) {
-        // throw createError("there is no role has name chauffeur", 409);
-        //must add gestion to create the role if not exist; but not now!
         const role = await Roles.createRole({ name: "chauffeur" });
         if(!role){
             throw createError("Failed to create role", 500);
@@ -38,4 +36,8 @@ export const registerService = async ({ firstName, lastName, email, password, ro
         accessToken,
         refreshToken
     }
+};
+
+export default {
+    registerService
 };

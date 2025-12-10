@@ -1,4 +1,4 @@
-import { registerService } from "../services/AuthService.js";
+import AuthService from "../services/AuthService.js";
 import successHandler from "../utils/successHandler.js";
 import tryCatch from "../middlewares/tryCatch.js";
 
@@ -8,7 +8,7 @@ import tryCatch from "../middlewares/tryCatch.js";
  */
 export const register = tryCatch(async (req, res, next) => {
     const {firstName, lastName, email, password} = req.body;
-    const Data = await registerService({ firstName, lastName, email, password, roleId });
+    const Data = await AuthService.registerService({ firstName, lastName, email, password, roleId });
 
     res.cookie("refreshToken", Data.refreshToken, {
         httpOnly: true,
