@@ -1,4 +1,4 @@
-import permitions from "./permitions";
+import permitions from "./permitions.js";
 
 const permitions_roles = {
     admin: [

@@ -19,6 +19,6 @@ router.post('/users/login', loginValidation, validate, login);
 router.post('/users/refresh-token', refreshToken);
 router.patch('/users/:id/accept', isAuth, iCan(permitions.accept_user), acceptUser);
 
-router.post('/roles/sync-permissions', isAuth, iCan(permitions.update_permissions), syncPermissions);
+router.post('/roles/sync-permissions', isAuth, syncPermissions);
 
 export default router;

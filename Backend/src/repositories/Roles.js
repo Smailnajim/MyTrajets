@@ -14,8 +14,12 @@ const findOneAndUpdatePermissions = async (role, permissions) => {
         { new: true }
     );
 }
+const findOneById = async (id) => {
+    return await Role.findById(id);
+}
 export default {
     createRole,
     findOne,
-    findOneAndUpdate
+    findOneAndUpdatePermissions,
+    findOneById
 };

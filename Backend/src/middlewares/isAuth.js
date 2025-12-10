@@ -3,7 +3,9 @@ import { verifyToken } from "../utils/token.js";
 import createError from "../utils/createError.js";
 
 export default async function(req, res, next){
-    const token = req.cookies.accessToken;
+    const accessauth = req.headers['authorization'];
+    const token = accessauth && accessauth.split(' ')[1].trim();
+    console.log("token\n",token);
     if(!token){
         return next(createError("Unauthorized", 401));
     }
