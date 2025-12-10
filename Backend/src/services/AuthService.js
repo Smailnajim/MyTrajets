@@ -10,7 +10,7 @@ const registerService = async ({ firstName, lastName, email, password, roleId })
     if (existingUser) {
         throw createError("Email already registered", 409);
     }
-    const chauffeurRole = await Roles.findOne({name: "chauffeur"});
+    let chauffeurRole = await Roles.findOne({name: "chauffeur"});
     if (!chauffeurRole) {
         const role = await Roles.createRole({ name: "chauffeur" });
         if(!role){
@@ -18,7 +18,7 @@ const registerService = async ({ firstName, lastName, email, password, roleId })
         }
         chauffeurRole = role;
     }
-    const user = Users.createUser({ roleId: chauffeurRole._id, firstName, lastName, email, password})
+    const user = await Users.createUser({ roleId: chauffeurRole._id, firstName, lastName, email, password})
     return {
         _id: user._id,
         firstName: user.firstName,

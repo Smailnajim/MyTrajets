@@ -8,7 +8,7 @@ import tryCatch from "../middlewares/tryCatch.js";
  */
 export const register = tryCatch(async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
-    const user = await AuthService.registerService({ firstName, lastName, email, password, roleId });
+    const user = await AuthService.registerService({ firstName, lastName, email, password});
 
     return successHandler(res, 201, "User registered successfully and Wait Admin ACCEPT YOU", user);
 });
