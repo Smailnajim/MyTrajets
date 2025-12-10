@@ -13,6 +13,6 @@ router.get('/', (req, res) => {
 router.post('/users/register', registerValidation, validate, register);
 router.post('/users/login', loginValidation, validate, login);
 router.post('/users/refresh-token', refreshToken);
-router.patch('/users/:id/accept', acceptUser);
+router.patch('/users/:id/accept', isAuth, acceptUser);
 
 export default router;
