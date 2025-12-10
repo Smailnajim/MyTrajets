@@ -56,6 +56,29 @@ const findByStatus = async (statuts) => {
         .populate('remorqueId');
 }
 
+const findAllWithPagination = async (limit = 10, page = 1, filters = {}) => {
+    const skip = (page - 1) * limit;
+    const trajets = await Trajet.find(filters)
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId')
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 });
+
+    const total = await Trajet.countDocuments(filters);
+
+    return {
+        trajets,
+        pagination: {
+            currentPage: page,
+            totalPages: Math.ceil(total / limit),
+            totalItems: total,
+            itemsPerPage: limit
+        }
+    };
+}
+
 // UPDATE
 const updateTrajet = async (id, updateData) => {
     return await Trajet.findByIdAndUpdate(id, updateData, { new: true })
@@ -109,6 +132,7 @@ export default {
     findByChauffeur,
     findByCamion,
     findByStatus,
+    findAllWithPagination,
     updateTrajet,
     updateStatus,
     updateArrival,
