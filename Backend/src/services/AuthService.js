@@ -20,9 +20,7 @@ const registerService = async ({ firstName, lastName, email, password, roleId })
         chauffeurRole = role;
     }
     const user = Users.createUser({ roleId: chauffeurRole._id, firstName, lastName, email, password})
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
-    const userResponse = {
+    return {
         _id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -31,11 +29,6 @@ const registerService = async ({ firstName, lastName, email, password, roleId })
         etat: user.etat,
         createdAt: user.createdAt
     };
-    return {
-        userResponse,
-        accessToken,
-        refreshToken
-    }
 };
 
 export default {

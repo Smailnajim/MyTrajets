@@ -7,14 +7,29 @@ import tryCatch from "../middlewares/tryCatch.js";
  * @route POST /api/auth/register
  */
 export const register = tryCatch(async (req, res, next) => {
-    const {firstName, lastName, email, password} = req.body;
-    const Data = await AuthService.registerService({ firstName, lastName, email, password, roleId });
+    const { firstName, lastName, email, password } = req.body;
+    const user = await AuthService.registerService({ firstName, lastName, email, password, roleId });
 
-    res.cookie("refreshToken", Data.refreshToken, {
+    return successHandler(res, 201, "User registered successfully and Wait Admin ACCEPT YOU", user);
+});
+
+/**
+ * Login user
+ * @route POST /api/users/login
+ */
+export const login = tryCatch(async (req, res, next) => {
+    const { email, password } = req.body;
+    const data = await AuthService.loginService({ email, password });
+
+    res.cookie("refreshToken", data.refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
-    return successHandler(res, 201, "User registered successfully", {user: Data.userResponse, accessToken: Data.accessToken});
+
+    return successHandler(res, 200, "Login successful", {
+        user: data.userResponse,
+        accessToken: data.accessToken
+    });
 });
