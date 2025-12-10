@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import Users from "../repositories/Users.js";
 import createError from "../utils/createError.js";
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from "../utils/token.js";
+import { generateAccessToken, generateRefreshToken, verifyToken } from "../utils/token.js";
 import Roles from "../repositories/Roles.js";
 
 
@@ -68,7 +68,7 @@ const refreshTokenService = async (refreshToken) => {
     if(!refreshToken){
         throw createError("Refresh token is required", 401);
     }
-    const decoded = verifyRefreshToken(refreshToken);
+    const decoded = verifyToken(refreshToken);
     if(!decoded){
         throw createError("Invalid refresh token", 401);
     }
