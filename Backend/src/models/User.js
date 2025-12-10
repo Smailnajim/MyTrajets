@@ -25,6 +25,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
+        min: 6,
         required: true
     },
     etat: {

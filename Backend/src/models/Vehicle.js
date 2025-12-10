@@ -34,7 +34,9 @@ const vehicleSchema = new Schema({
     pneus: [{
         serialNumber: { type: String },
         position: { type: String },
-        kilometrageActuel: { type: Number, default: 0 }
+        usure: {type: Number, efault: 0, min: 0, max: 100},
+        remplacement: {type: Boolean, default: false},
+        kilometrageActuel: { type: Number, default: 0, min: 0 }
     }]
 }, {collection: 'vehicles', timestamps: true});
 
