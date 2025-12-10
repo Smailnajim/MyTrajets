@@ -6,7 +6,7 @@ import Roles from "../repositories/Roles.js";
 
 
 const registerService = async ({ firstName, lastName, email, password, roleId }) => {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await Users.findOneByEmail({ email });
     if (existingUser) {
         throw createError("Email already registered", 409);
     }
@@ -31,7 +31,7 @@ const registerService = async ({ firstName, lastName, email, password, roleId })
 };
 
 const loginService = async ({ email, password }) => {
-    const user = await User.findOne({ email });
+    const user = await Users.findOneByEmail({ email });
     if(!user){
         throw createError("Invalid email or password", 401);
     }

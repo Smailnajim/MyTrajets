@@ -13,6 +13,11 @@ const createUser = async ({roleId, firstName, lastName, email, password, roleId 
     return await user.save();
 }
 
+const findOneByEmail = async ({email}) => {
+    return await User.findOne({email});
+}
+
 export default {
     createUser,
+    findOneByEmail
 };
