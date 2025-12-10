@@ -7,11 +7,6 @@ const maintenanceSchema = new Schema({
         ref: 'Vehicle',
         required: true
     },
-    type: {
-        type: String,
-        enum: maintenanceType,
-        required: true
-    },
     description: {
         type: String,
         required: true,
