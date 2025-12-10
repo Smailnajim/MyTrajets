@@ -1,0 +1,117 @@
+import Trajet from "../models/Trajet.js";
+
+// CREATE
+const createTrajet = async (trajet) => {
+    const newTrajet = new Trajet(trajet);
+    return await newTrajet.save();
+}
+
+// READ
+const findOne = async (query) => {
+    return await Trajet.findOne(query)
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const findOneById = async (id) => {
+    return await Trajet.findById(id)
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const findAll = async () => {
+    return await Trajet.find()
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const findAllWithFilters = async (filters = {}) => {
+    return await Trajet.find(filters)
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const findByChauffeur = async (chauffeurId) => {
+    return await Trajet.find({ chauffeurId })
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const findByCamion = async (camionId) => {
+    return await Trajet.find({ camionId })
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const findByStatus = async (statuts) => {
+    return await Trajet.find({ statuts })
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+// UPDATE
+const updateTrajet = async (id, updateData) => {
+    return await Trajet.findByIdAndUpdate(id, updateData, { new: true })
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const updateStatus = async (id, statuts) => {
+    return await Trajet.findByIdAndUpdate(
+        id,
+        { statuts },
+        { new: true }
+    )
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+const updateArrival = async (id, arriveData) => {
+    return await Trajet.findByIdAndUpdate(
+        id,
+        {
+            'suiviDate.arrive': arriveData.date,
+            'suiviGasoilL.arrive': arriveData.gasoil,
+            'emplacement.arrive': arriveData.emplacement,
+            'statuts': 'completed'
+        },
+        { new: true }
+    )
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
+// DELETE
+const deleteTrajet = async (id) => {
+    return await Trajet.findByIdAndDelete(id);
+}
+
+const deleteMany = async (filters) => {
+    return await Trajet.deleteMany(filters);
+}
+
+export default {
+    createTrajet,
+    findOne,
+    findOneById,
+    findAll,
+    findAllWithFilters,
+    findByChauffeur,
+    findByCamion,
+    findByStatus,
+    updateTrajet,
+    updateStatus,
+    updateArrival,
+    deleteTrajet,
+    deleteMany
+};
