@@ -20,6 +20,16 @@ export const registerValidation = [
         .isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
 ];
 
+export const loginValidation = [
+    body('email')
+        .trim()
+        .notEmpty().withMessage('Email is required')
+        .isEmail().withMessage('Invalid email format')
+        .normalizeEmail(),
+    body('password')
+        .notEmpty().withMessage('Password is required'),
+];
+
 export const validate = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return next(createError("Validation failed", 400, errors.array()));
