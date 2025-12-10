@@ -2,7 +2,10 @@ import Role from "../models/Role.js";
 import permitions_roles from "../enums/permitions_roles.js";
 import Roles from "../repositories/Roles.js";
 
-
+/**
+ * Sync all roles permissions from permitions_roles enum
+ * @returns {Promise<Array>} Array of sync results
+ */
 const syncPermissions = async () => {
     const results = [];
 
