@@ -88,6 +88,42 @@ const updateKilometrage = async (id, kilometrageActuel) => {
     );
 }
 
+const updatePneus = async (id, pneus) => {
+    return await Vehicle.findByIdAndUpdate(
+        id,
+        { pneus },
+        { new: true }
+    );
+}
+
+const addPneu = async (id, pneu) => {
+    return await Vehicle.findByIdAndUpdate(
+        id,
+        { $push: { pneus: pneu } },
+        { new: true }
+    );
+}
+
+const updatePneuBySerial = async (vehicleId, serialNumber, updateData) => {
+    return await Vehicle.findOneAndUpdate(
+        { _id: vehicleId, 'pneus.serialNumber': serialNumber },
+        { $set: { 'pneus.$': { ...updateData, serialNumber } } },
+        { new: true }
+    );
+}
+
+const removePneu = async (vehicleId, serialNumber) => {
+    return await Vehicle.findByIdAndUpdate(
+        vehicleId,
+        { $pull: { pneus: { serialNumber } } },
+        { new: true }
+    );
+}
+
+const getVehiclesByPneuSerialNumber = async (serialNumber) => {
+    return await Vehicle.find({"pneus.serialNumber": serialNumber});
+}//i can use findAllWithFilters too, for get all cars those have a pneu spisifique
+
 // DELETE
 const deleteVehicle = async (id) => {
     return await Vehicle.findByIdAndDelete(id);
@@ -116,6 +152,10 @@ export default {
     updateStatus,
     updatePosition,
     updateKilometrage,
+    updatePneus,
+    addPneu,
+    updatePneuBySerial,
+    removePneu,
     deleteVehicle,
     deleteByPlateNumber,
     deleteMany
