@@ -1,7 +1,7 @@
 import User from "../models/User";
 
 
-export const createUser = async ({roleId, firstName, lastName, email, password, roleId }) => {
+const createUser = async ({roleId, firstName, lastName, email, password, roleId }) => {
     const user = new User({ 
         roleId,
         firstName, 
@@ -12,3 +12,7 @@ export const createUser = async ({roleId, firstName, lastName, email, password, 
 
     return await user.save();
 }
+
+export default {
+    createUser,
+};
