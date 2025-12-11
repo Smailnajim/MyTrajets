@@ -28,5 +28,6 @@ router.get('/camions/kilometrage', TrajetController.getCamionKilometrage);//isAu
 router.get('/remorques/kilometrage', TrajetController.getRemorqueKilometrage);//isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/pneus/kilometrage', TrajetController.getPneuKilometrage);////isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/vehicle/:id/kilometrage', VehicleController.getVehicle_s_PneusKilometrage);
+router.get('/trajets', TrajetController.getAllTrajets);
 
 export default router;

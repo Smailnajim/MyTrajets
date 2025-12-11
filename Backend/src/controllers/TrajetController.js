@@ -47,9 +47,21 @@ const getPneuKilometrage = tryCatch(async (req, res) => {
     return successHandler(res, 200, "Pneu kilometrage retrieved successfully", pneus);
 });
 
+
+
+/**
+ * Get all trajets
+ * @route GET /api/trajets
+ */
+const getAllTrajets = tryCatch(async(req, res, next)=>{
+    const trajets = await TrajetService.allTrajets();
+    return successHandler(res, 200, "get trajets by successfully", trajets);
+})
+
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
     getRemorqueKilometrage,
+    getAllTrajets,
     getPneuKilometrage
 }

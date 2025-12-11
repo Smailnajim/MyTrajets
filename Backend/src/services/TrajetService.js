@@ -36,9 +36,18 @@ const getPneuKilometrage = async () => {
     return await Vehicles.getPneuKilometrageWithItsVehicles();
 }
 
+/**
+ * get all Trajets
+ * @returns {Promise<Array>}
+ */
+const allTrajets = async () => {
+    return await Trajets.findAll();
+};
+
 export default {
     getAllTrajets,
     getCamionKilometrage,
     getRemorqueKilometrage,
+    allTrajets,
     getPneuKilometrage
 };
