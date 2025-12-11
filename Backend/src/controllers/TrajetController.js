@@ -6,7 +6,7 @@ import tryCatch from "../middlewares/tryCatch.js";
  * Get trajets filtered by status
  * @route GET /api/trajets/status/:status
  */
-export const getTrajetsByStatus = tryCatch(async (req, res, next) => {
+const getTrajetsByStatus = tryCatch(async (req, res, next) => {
     const { status } = req.params;
     const user = req.user;
     const roleName = user.roleId?.name?.toLowerCase();
@@ -23,7 +23,7 @@ export const getTrajetsByStatus = tryCatch(async (req, res, next) => {
  * Get total kilometrage for each camion
  * @route GET /api/camions/kilometrage
  */
-export const getCamionKilometrage = tryCatch(async (req, res, next) => {
+const getCamionKilometrage = tryCatch(async (req, res, next) => {
     const camions = await TrajetService.getCamionKilometrage();
     return successHandler(res, 200, "Camion kilometrage retrieved successfully", camions);
 });
@@ -32,7 +32,14 @@ export const getCamionKilometrage = tryCatch(async (req, res, next) => {
  * Get total kilometrage for each remorque
  * @route GET /api/remorques/kilometrage
  */
-export const getRemorqueKilometrage = tryCatch(async (req, res, next) => {
+const getRemorqueKilometrage = tryCatch(async (req, res, next) => {
     const remorques = await TrajetService.getRemorqueKilometrage();
     return successHandler(res, 200, "Remorque kilometrage retrieved successfully", remorques);
 });
+
+
+export default {
+    getTrajetsByStatus,
+    getCamionKilometrage,
+    getRemorqueKilometrage,
+}

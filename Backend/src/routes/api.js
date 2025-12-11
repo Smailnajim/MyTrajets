@@ -23,7 +23,8 @@ router.patch('/users/:id/accept', acceptUser);//isAuth, iCan(permitions.accept_u
 router.post('/roles/sync-permissions', syncPermissions);//isAuth, iCan(permitions.update_permissions),
 
 router.get('/trajets/status/:status', getTrajetsByStatus);//isAuth,
-router.get('/camions/kilometrage', getCamionKilometrage);//isAuth,
-router.get('/remorques/kilometrage', getRemorqueKilometrage);//isAuth,
+router.get('/camions/kilometrage', getCamionKilometrage);//isAuth, iCan(permitions.getTotalKilometrage),
+router.get('/remorques/kilometrage', getRemorqueKilometrage);//isAuth, iCan(permitions.getTotalKilometrage),
+router.get('/pneus/kilometrage', getPneuKilometrage);////isAuth, iCan(permitions.getTotalKilometrage),
 
 export default router;
