@@ -59,6 +59,11 @@ const findAllWithPagination = async (limit = 10, page = 1, filters = {}) => {
     };
 }
 
+const getPneuKilometrageWithItsVehicles = async () => {
+    return await Vehicle.find({}, {_id: 1, pneus: 1});
+    
+}
+
 // UPDATE
 const updateVehicle = async (id, updateData) => {
     return await Vehicle.findByIdAndUpdate(id, updateData, { new: true });
@@ -121,7 +126,7 @@ const removePneu = async (vehicleId, serialNumber) => {
 }
 
 const getVehiclesByPneuSerialNumber = async (serialNumber) => {
-    return await Vehicle.find({"pneus.serialNumber": serialNumber});
+    return await Vehicle.find({ "pneus.serialNumber": serialNumber });
 }//i can use findAllWithFilters too, for get all cars those have a pneu spisifique
 
 // DELETE
@@ -148,6 +153,7 @@ export default {
     findByStatus,
     findAvailable,
     findAllWithPagination,
+    getPneuKilometrageWithItsVehicles,
     updateVehicle,
     updateStatus,
     updatePosition,
