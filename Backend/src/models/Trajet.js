@@ -25,7 +25,7 @@ const trajetSchema = new Schema({
             type: Date
         }
     },
-    suiviGasoilL: {
+    suiviGasoilML: {
         depart: {
             type: Number,
             default: 0
