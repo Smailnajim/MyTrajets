@@ -1,3 +1,5 @@
+import TrajetService from "../services/TrajetService.js";
+import successHandler from "../utils/successHandler.js";
 import tryCatch from "../middlewares/tryCatch.js";
 
 /**
@@ -14,4 +16,5 @@ export const getTrajetsByStatus = tryCatch(async (req, res, next) => {
         filters.chauffeurId = user._id;
     }
     const trajets = await TrajetService.getAllTrajets(filters);
+    return successHandler(res, 200, `Trajets with status '${status}' retrieved successfully`, trajets);
 });
