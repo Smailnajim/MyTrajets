@@ -23,10 +23,6 @@ const vehicleSchema = new Schema({
         enum: vehicleStatus,
         default: "available"
     },
-    kilometrageActuel: {
-        type: Number,
-        default: 0
-    },
     derniereVidangeDhuileKm: {
         type: Number,
         default: 0

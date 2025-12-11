@@ -51,6 +51,10 @@ const trajetSchema = new Schema({
             lng: { type: Number },
             address: { type: String }
         }
+    },
+    kilometrage:{
+        type: Number,
+        default: 0
     }
 }, {collection: 'trajets', timestamps: true});
 
