@@ -72,7 +72,7 @@ const refreshTokenService = async (refreshToken) => {
     if(!decoded){
         throw createError("Invalid refresh token", 401);
     }
-    const user = await Users.findOneById({id: decoded.userId});
+    const user = await Users.findOneById(decoded.userId);
     if(!user){
         throw createError("User not found", 404);
     }
@@ -86,7 +86,7 @@ const refreshTokenService = async (refreshToken) => {
 };
 
 const acceptUserService = async (userId) => {
-    const user = await Users.findOneById({ id: userId });
+    const user = await Users.findOneById(userId);
     if(!user){
         throw createError("User not found", 404);
     }

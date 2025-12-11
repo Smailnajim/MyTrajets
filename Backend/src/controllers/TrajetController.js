@@ -10,11 +10,20 @@ export const getTrajetsByStatus = tryCatch(async (req, res, next) => {
     const { status } = req.params;
     const user = req.user;
     const roleName = user.roleId?.name?.toLowerCase();
-    const filters = {statuts: status};
+    const filters = { statuts: status };
 
-    if (roleName == 'chauffeur'){
+    if (roleName == 'chauffeur') {
         filters.chauffeurId = user._id;
     }
     const trajets = await TrajetService.getAllTrajets(filters);
     return successHandler(res, 200, `Trajets with status '${status}' retrieved successfully`, trajets);
+});
+
+/**
+ * Get total kilometrage for each camion
+ * @route GET /api/camions/kilometrage
+ */
+export const getCamionKilometrage = tryCatch(async (req, res, next) => {
+    const camions = await TrajetService.getCamionKilometrage();
+    return successHandler(res, 200, "Camion kilometrage retrieved successfully", camions);
 });
