@@ -44,6 +44,7 @@ const getRemorqueKilometrage = tryCatch(async (req, res, next) => {
  */
 const getPneuKilometrage = tryCatch( async()=>{
     const pneus = TrajetService.getPneuKilometrage();
+    return successHandler(res, 200, "Pneu kilometrage retrieved successfully", pneus);
 });
 
 export default {
