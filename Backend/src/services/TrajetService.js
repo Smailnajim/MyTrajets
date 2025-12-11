@@ -19,7 +19,16 @@ const getCamionKilometrage = async () => {
     return await Trajets.getCamionKilometrage();
 };
 
+/**
+ * Get total kilometrage for each remorque
+ * @returns {Promise<Array>}
+ */
+const getRemorqueKilometrage = async () => {
+    return await Trajets.getRemorqueKilometrage();
+};
+
 export default {
     getAllTrajets,
-    getCamionKilometrage
+    getCamionKilometrage,
+    getRemorqueKilometrage
 };

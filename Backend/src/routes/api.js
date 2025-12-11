@@ -1,7 +1,7 @@
 import express from "express";
 import { register, login, refreshToken, acceptUser } from "../controllers/AuthController.js";
 import { syncPermissions } from "../controllers/RoleController.js";
-import { getTrajetsByStatus, getCamionKilometrage } from "../controllers/TrajetController.js";
+import { getTrajetsByStatus, getCamionKilometrage, getRemorqueKilometrage } from "../controllers/TrajetController.js";
 import { registerValidation, loginValidation, validate } from "../validators/authValidator.js";
 import isAuth from "../middlewares/isAuth.js";
 import iCan from "../middlewares/iCan.js";
@@ -18,11 +18,12 @@ router.get('/', (req, res) => {
 router.post('/users/register', registerValidation, validate, register);
 router.post('/users/login', loginValidation, validate, login);
 router.post('/users/refresh-token', refreshToken);
-router.patch('/users/:id/accept',  acceptUser);//isAuth, iCan(permitions.accept_user),
+router.patch('/users/:id/accept', acceptUser);//isAuth, iCan(permitions.accept_user),
 
-router.post('/roles/sync-permissions',  syncPermissions);//isAuth, iCan(permitions.update_permissions),
+router.post('/roles/sync-permissions', syncPermissions);//isAuth, iCan(permitions.update_permissions),
 
-router.get('/trajets/status/:status',  getTrajetsByStatus);//isAuth,
-router.get('/camions/kilometrage',  getCamionKilometrage);//isAuth,
+router.get('/trajets/status/:status', getTrajetsByStatus);//isAuth,
+router.get('/camions/kilometrage', getCamionKilometrage);//isAuth,
+router.get('/remorques/kilometrage', getRemorqueKilometrage);//isAuth,
 
 export default router;

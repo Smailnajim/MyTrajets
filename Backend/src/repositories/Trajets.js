@@ -130,6 +130,36 @@ const getCamionKilometrage = async () => {
         {
             $group: {
                 _id: '$camionId',
+                totalKilometrage: { $sum: '$kilometrage'},
+                trajetCount: { $sum: 1 }
+            }
+        },
+        {
+            $lookup: {
+                from: 'vehicles',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'vehicle'
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                vehicleId: '$_id',
+                plateNumber: '$vehicle.plateNumber',
+                totalKilometrage: 1,
+                trajetCount: 1
+            }
+        }
+    ]);
+}
+
+const getRemorqueKilometrage = async () => {
+    return await Trajet.aggregate([
+        { $match: { statuts: 'completed', remorqueId: { $exists: true, $ne: null } } },
+        {
+            $group: {
+                _id: '$remorqueId',
                 totalKilometrage: { $sum: '$kilometrage' },
                 trajetCount: { $sum: 1 }
             }
@@ -142,6 +172,7 @@ const getCamionKilometrage = async () => {
                 as: 'vehicle'
             }
         },
+        { $unwind: '$vehicle' },
         {
             $project: {
                 _id: 0,
@@ -169,5 +200,6 @@ export default {
     updateArrival,
     deleteTrajet,
     deleteMany,
-    getCamionKilometrage
+    getCamionKilometrage,
+    getRemorqueKilometrage
 };

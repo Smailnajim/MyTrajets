@@ -27,3 +27,12 @@ export const getCamionKilometrage = tryCatch(async (req, res, next) => {
     const camions = await TrajetService.getCamionKilometrage();
     return successHandler(res, 200, "Camion kilometrage retrieved successfully", camions);
 });
+
+/**
+ * Get total kilometrage for each remorque
+ * @route GET /api/remorques/kilometrage
+ */
+export const getRemorqueKilometrage = tryCatch(async (req, res, next) => {
+    const remorques = await TrajetService.getRemorqueKilometrage();
+    return successHandler(res, 200, "Remorque kilometrage retrieved successfully", remorques);
+});
