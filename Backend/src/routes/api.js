@@ -18,11 +18,11 @@ router.get('/', (req, res) => {
 router.post('/users/register', registerValidation, validate, register);
 router.post('/users/login', loginValidation, validate, login);
 router.post('/users/refresh-token', refreshToken);
-router.patch('/users/:id/accept', isAuth, iCan(permitions.accept_user), acceptUser);
+router.patch('/users/:id/accept',  acceptUser);//isAuth, iCan(permitions.accept_user),
 
-router.post('/roles/sync-permissions', isAuth, iCan(permitions.update_permissions), syncPermissions);
+router.post('/roles/sync-permissions',  syncPermissions);//isAuth, iCan(permitions.update_permissions),
 
-router.get('/trajets/status/:status', isAuth, getTrajetsByStatus);
-router.get('/camions/kilometrage', isAuth, getCamionKilometrage);
+router.get('/trajets/status/:status',  getTrajetsByStatus);//isAuth,
+router.get('/camions/kilometrage',  getCamionKilometrage);//isAuth,
 
 export default router;
