@@ -56,7 +56,19 @@ const trajetSchema = new Schema({
         type: Number,
         default: 0
     }
-}, {collection: 'trajets', timestamps: true});
+}, {
+    collection: 'trajets',
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
+
+trajetSchema.virtual('consommation').get(function () {
+    if (this.suiviGasoilML && this.suiviGasoilML.depart != null && this.suiviGasoilML.arrive != null) {
+        return this.suiviGasoilML.depart - this.suiviGasoilML.arrive;
+    }
+    return null;
+});
 
 const Trajet = model("Trajet", trajetSchema);
 export default Trajet;

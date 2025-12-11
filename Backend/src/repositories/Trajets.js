@@ -103,7 +103,7 @@ const updateArrival = async (id, arriveData) => {
         id,
         {
             'suiviDate.arrive': arriveData.date,
-            'suiviGasoilL.arrive': arriveData.gasoil,
+            'suiviGasoilML.arrive': arriveData.gasoil,
             'emplacement.arrive': arriveData.emplacement,
             'statuts': 'completed'
         },
@@ -126,11 +126,11 @@ const deleteMany = async (filters) => {
 // AGGREGATIONS
 const getCamionKilometrage = async () => {
     return await Trajet.aggregate([
-        { $match: { statuts: 'completed' }},
+        { $match: { statuts: 'completed' } },
         {
             $group: {
                 _id: '$camionId',
-                totalKilometrage: { $sum: '$kilometrage'},
+                totalKilometrage: { $sum: '$kilometrage' },
                 trajetCount: { $sum: 1 }
             }
         },

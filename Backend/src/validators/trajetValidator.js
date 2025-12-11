@@ -18,7 +18,7 @@ export const createTrajetValidation = [
     body('suiviDate.depart')
         .notEmpty().withMessage('Departure date is required')
         .isISO8601().withMessage('Invalid departure date format'),
-    body('suiviGasoilL.depart')
+    body('suiviGasoilML.depart')
         .optional()
         .isNumeric().withMessage('Departure gasoil must be a number'),
     body('statuts')
@@ -51,7 +51,7 @@ export const updateTrajetValidation = [
     body('statuts')
         .optional()
         .isIn(trajetStatus).withMessage(`Status must be one of: ${trajetStatus.join(', ')}`),
-    body('suiviGasoilL.arrive')
+    body('suiviGasoilML.arrive')
         .optional()
         .isNumeric().withMessage('Arrival gasoil must be a number'),
     body('suiviDate.arrive')
