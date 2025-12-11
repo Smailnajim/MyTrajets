@@ -64,6 +64,10 @@ const getPneuKilometrageWithItsVehicles = async () => {
     
 }
 
+const getVehicle_s_PneusKilometrage = async (vehicleId) => {
+    return await Vehicle.findById(vehicleId, {_id: 1, pneus: 1})
+}
+
 // UPDATE
 const updateVehicle = async (id, updateData) => {
     return await Vehicle.findByIdAndUpdate(id, updateData, { new: true });
@@ -154,6 +158,7 @@ export default {
     findAvailable,
     findAllWithPagination,
     getPneuKilometrageWithItsVehicles,
+    getVehicle_s_PneusKilometrage,
     updateVehicle,
     updateStatus,
     updatePosition,

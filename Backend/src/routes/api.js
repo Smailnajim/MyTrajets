@@ -6,6 +6,7 @@ import { registerValidation, loginValidation, validate } from "../validators/aut
 import isAuth from "../middlewares/isAuth.js";
 import iCan from "../middlewares/iCan.js";
 import permitions from "../enums/permitions.js";
+import VehicleController from "../controllers/VehicleController.js";
 
 const router = express.Router();
 
@@ -26,5 +27,6 @@ router.get('/trajets/status/:status', TrajetController.getTrajetsByStatus);//isA
 router.get('/camions/kilometrage', TrajetController.getCamionKilometrage);//isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/remorques/kilometrage', TrajetController.getRemorqueKilometrage);//isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/pneus/kilometrage', TrajetController.getPneuKilometrage);////isAuth, iCan(permitions.getTotalKilometrage),
+router.get('/vehicle/:id/kilometrage', VehicleController.getVehicle_s_PneusKilometrage);
 
 export default router;
