@@ -38,8 +38,17 @@ const getRemorqueKilometrage = tryCatch(async (req, res, next) => {
 });
 
 
+/**
+ * Get total kilometrage for each pneu 
+ * @route GET /api/pneus/kilometrage 
+ */
+const getPneuKilometrage = tryCatch( async()=>{
+    const pneus = TrajetService.getPneuKilometrage();
+});
+
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
     getRemorqueKilometrage,
+    getPneuKilometrage
 }
