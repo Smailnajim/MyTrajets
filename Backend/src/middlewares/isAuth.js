@@ -13,7 +13,7 @@ export default async function(req, res, next){
     if(!decoded){
         return next(createError("Unauthorized", 401));
     }
-    const user = await Users.findOneById({id: decoded.userId});
+    const user = await Users.findOneByIdWithRole(decoded.userId);
     if(!user){
         return next(createError("User not found", 404));
     }

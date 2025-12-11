@@ -1,6 +1,7 @@
 import express from "express";
 import { register, login, refreshToken, acceptUser } from "../controllers/AuthController.js";
 import { syncPermissions } from "../controllers/RoleController.js";
+import { getTrajetsByStatus } from "../controllers/TrajetController.js";
 import { registerValidation, loginValidation, validate } from "../validators/authValidator.js";
 import isAuth from "../middlewares/isAuth.js";
 import iCan from "../middlewares/iCan.js";
@@ -20,5 +21,7 @@ router.post('/users/refresh-token', refreshToken);
 router.patch('/users/:id/accept', isAuth, iCan(permitions.accept_user), acceptUser);
 
 router.post('/roles/sync-permissions', isAuth, iCan(permitions.update_permissions), syncPermissions);
+
+router.get('/trajets/status/:status', isAuth, getTrajetsByStatus);
 
 export default router;

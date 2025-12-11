@@ -60,6 +60,7 @@ export default {
     createUser,
     findOneByEmail,
     findOneById,
+    findOneByIdWithRole,
     findAll,
     findAllWithFilters,
     updateUserStatus,
