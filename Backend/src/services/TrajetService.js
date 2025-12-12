@@ -87,14 +87,23 @@ const getCamionConsommation = async (camionId) => {
 const getTrajetConsommation = async (camionId, trajetId, user = null) => {
     const trajet = await Trajets.findOne({ _id: trajetId, camionId: camionId });
     if (!trajet) throw createError(`Trajet ${trajetId} not found for camion ${camionId}`, 404);
-    
+
     const roleName = user?.roleId?.name.toLowerCase();
-    console.log(roleName, "...trajet\n", );
-    if(roleName == "chauffeur"){
-        if(trajet.chauffeurId._id.toString() != user?.roleId?._id.toString()) 
+    console.log(roleName, "...trajet\n",);
+    if (roleName == "chauffeur") {
+        if (trajet.chauffeurId._id.toString() != user?.roleId?._id.toString())
             throw createError('this trajet assignd to another chauffeur', 403);
     }
     return { consommation: trajet.consommation };
+};
+
+/**
+ * Create a new trajet
+ * @param {Object} trajetData
+ * @returns {Promise<Object>}
+ */
+const createTrajet = async (trajetData) => {
+    return await Trajets.createTrajet(trajetData);
 };
 
 export default {
@@ -105,5 +114,6 @@ export default {
     getTrajet,
     getPneuKilometrage,
     getCamionConsommation,
-    getTrajetConsommation
+    getTrajetConsommation,
+    createTrajet
 };

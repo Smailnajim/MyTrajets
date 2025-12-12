@@ -88,6 +88,15 @@ const getTrajetConsommation = tryCatch(async (req, res) => {
     return successHandler(res, 200, "camion's consommation selected by successfuly", result);
 });
 
+/**
+ * Create a new trajet
+ * @route POST /api/trajets
+ */
+const createTrajet = tryCatch(async (req, res) => {
+    const trajet = await TrajetService.createTrajet(req.body);
+    return successHandler(res, 201, "Trajet created successfully", trajet);
+});
+
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
@@ -96,5 +105,6 @@ export default {
     getTrajet,
     getPneuKilometrage,
     getCamionConsommation,
-    getTrajetConsommation
+    getTrajetConsommation,
+    createTrajet
 }
