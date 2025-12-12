@@ -76,6 +76,12 @@ const getCamionConsommation = async (camionId) => {
     return result[0];
 };
 
+const getTrajetConsommation = async (camionId, trajetId) => {
+    const trajet = await Trajets.findOne({ _id: trajetId, camionId: camionId });
+    if (!trajet) throw createError(`Trajet ${trajetId} not found for camion ${camionId}`, 404);
+    return { consommation: trajet.consommation };
+};
+
 export default {
     getAllTrajets,
     getCamionKilometrage,
@@ -83,5 +89,6 @@ export default {
     allTrajets,
     getTrajet,
     getPneuKilometrage,
-    getCamionConsommation
+    getCamionConsommation,
+    getTrajetConsommation
 };

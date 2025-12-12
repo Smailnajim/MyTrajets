@@ -32,10 +32,8 @@ router.get('/vehicle/:id/kilometrage', VehicleController.getVehicle_s_PneusKilom
 router.get('/trajets', TrajetController.getAllTrajets);
 router.get('/trajets/:id', TrajetController.getTrajet);
 
-router.get('/camions/:id/carburant', TrajetController.getCamionConsommation);
-// router.get('camions/:id/trajet/:id/carburant', );
+router.get('/camions/:id/carburant', TrajetController.getCamionConsommation);//iCan("consomation_total_camion")
+router.get('/camions/:camionId/trajet/:trajetId/carburant', TrajetController.getTrajetConsommation);
 
-// router.get('trajet/carburant', );
-// router.get('trajet/:id/carburant', );
 
 export default router;

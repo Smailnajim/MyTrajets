@@ -78,6 +78,16 @@ const getCamionConsommation = tryCatch(async (req, res) => {
     return successHandler(res, 200, "Camion consumption retrieved successfully", consommation);
 });
 
+/**
+ * Get consumption for a specific trajet of a specific camion
+ * @route GET /api/camions/:camionId/trajet/:trajetId/carburant
+ */
+const getTrajetConsommation = tryCatch(async (req, res) => {
+    const { camionId, trajetId } = req.params;
+    const result = await TrajetService.getTrajetConsommation(camionId, trajetId);
+    return successHandler(res, 200, "camion's consommation selected by successfuly", result);
+});
+
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
@@ -85,5 +95,6 @@ export default {
     getAllTrajets,
     getTrajet,
     getPneuKilometrage,
-    getCamionConsommation
+    getCamionConsommation,
+    getTrajetConsommation
 }
