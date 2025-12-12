@@ -5,7 +5,7 @@ import trajetStatus from "../enums/trajetStatus.js";
 
 
 
-export const createTrajetValidation = [
+const createTrajetValidation = [
     body('chauffeurId')
         .notEmpty().withMessage('Chauffeur ID is required')
         .isMongoId().withMessage('Invalid chauffeur ID format'),
@@ -35,7 +35,7 @@ export const createTrajetValidation = [
         .isString().withMessage('Address must be a string'),
 ];
 
-export const updateTrajetValidation = [
+const updateTrajetValidation = [
     param('id')
         .notEmpty().withMessage('ID is required')
         .isMongoId().withMessage('Invalid trajet ID format'),
@@ -54,6 +54,9 @@ export const updateTrajetValidation = [
     body('suiviGasoilML.arrive')
         .optional()
         .isNumeric().withMessage('Arrival gasoil must be a number'),
+    body('suiviDate.depart')
+        .optional()
+        .isISO8601().withMessage('Invalid departure date format'),
     body('suiviDate.arrive')
         .optional()
         .isISO8601().withMessage('Invalid arrival date format'),
@@ -66,12 +69,18 @@ export const updateTrajetValidation = [
     body('emplacement.arrive.address')
         .optional()
         .isString().withMessage('Address must be a string'),
+    body('emplacement.depart.lat')
+        .optional()
+        .isFloat({ min: -90, max: 90 }).withMessage('Latitude must be between -90 and 90'),
+    body('emplacement.depart.lng')
+        .optional()
+        .isFloat({ min: -180, max: 180 }).withMessage('Longitude must be between -180 and 180'),
+    body('emplacement.depart.address')
+        .optional()
+        .isString().withMessage('Address must be a string'),
 ];
 
-export const validate = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return next(createError("Validation failed", 400, errors.array()));
-    }
-    next();
-};
+export default {
+    createTrajetValidation,
+    updateTrajetValidation
+}

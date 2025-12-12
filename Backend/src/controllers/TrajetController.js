@@ -1,6 +1,7 @@
 import TrajetService from "../services/TrajetService.js";
 import successHandler from "../utils/successHandler.js";
 import tryCatch from "../middlewares/tryCatch.js";
+import { matchedData } from "express-validator";
 
 /**
  * Get trajets filtered by status
@@ -53,15 +54,81 @@ const getPneuKilometrage = tryCatch(async (req, res) => {
  * Get all trajets
  * @route GET /api/trajets
  */
-const getAllTrajets = tryCatch(async(req, res, next)=>{
+const getAllTrajets = tryCatch(async (req, res, next) => {
     const trajets = await TrajetService.allTrajets();
     return successHandler(res, 200, "get trajets by successfully", trajets);
 })
+/**
+ * Get a trajet spesifique
+ * @route GET /api/trajets/:id
+ */
+const getTrajet = tryCatch(async (req, res, next) => {
+    const { id: trajetId } = req.params;
+    const user = req.user;
+    const trajet = await TrajetService.getTrajet(trajetId, user);
+    return successHandler(res, 200, "get trajet by successfully", trajet);
+})
+
+/**
+ * Get total consumption for a specific camion
+ * @route GET /api/camions/:id/carburant
+ */
+const getCamionConsommation = tryCatch(async (req, res) => {
+    const { id } = req.params;
+    const consommation = await TrajetService.getCamionConsommation(id);
+    return successHandler(res, 200, "Camion consumption retrieved successfully", consommation);
+});
+
+/**
+ * Get consumption for a specific trajet of a specific camion
+ * @route GET /api/camions/:camionId/trajet/:trajetId/carburant
+ */
+const getTrajetConsommation = tryCatch(async (req, res) => {
+    const { camionId, trajetId } = req.params;
+    const result = await TrajetService.getTrajetConsommation(camionId, trajetId, req.user);
+    return successHandler(res, 200, "camion's consommation selected by successfuly", result);
+});
+
+/**
+ * Create a new trajet
+ * @route POST /api/trajets
+ */
+const createTrajet = tryCatch(async (req, res) => {
+    const body = matchedData(req, { locations: ["body"] });
+    const trajet = await TrajetService.createTrajet(body);
+    return successHandler(res, 201, "Trajet created successfully", trajet);
+});
+
+/**
+ * Update a new trajet
+ * @route Patch /api/trajets
+ */
+const updateTrajet = tryCatch(async (req, res) => {
+    const body = matchedData(req, { locations: ['params', 'body'] });
+    const trajet = await TrajetService.updateTrajet(body);
+    return successHandler(res, 201, "Trajet created successfully", trajet);
+});
+
+
+/**
+ * 
+ */
+
+const getAllMyTrajets = async (req, res, next)=>{
+    const Trajets = await TrajetService.chauffeur_s_Trajets(req.user?._id);
+    successHandler(res, 200, "these are your Trajets those assigned to you", Trajets);
+}
 
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
     getRemorqueKilometrage,
     getAllTrajets,
-    getPneuKilometrage
+    getTrajet,
+    getPneuKilometrage,
+    getCamionConsommation,
+    getTrajetConsommation,
+    createTrajet,
+    getAllMyTrajets,
+    updateTrajet
 }

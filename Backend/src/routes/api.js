@@ -7,6 +7,7 @@ import isAuth from "../middlewares/isAuth.js";
 import iCan from "../middlewares/iCan.js";
 import permitions from "../enums/permitions.js";
 import VehicleController from "../controllers/VehicleController.js";
+import trajetValidator from "../validators/trajetValidator.js";
 
 const router = express.Router();
 
@@ -28,6 +29,17 @@ router.get('/camions/kilometrage', TrajetController.getCamionKilometrage);//isAu
 router.get('/remorques/kilometrage', TrajetController.getRemorqueKilometrage);//isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/pneus/kilometrage', TrajetController.getPneuKilometrage);////isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/vehicle/:id/kilometrage', VehicleController.getVehicle_s_PneusKilometrage);
+// **when get trajet there is a virtual field is consommation**
 router.get('/trajets', TrajetController.getAllTrajets);
+router.get('/trajets/:id', TrajetController.getTrajet);
 
+router.get('/camions/:id/carburant', TrajetController.getCamionConsommation);//iCan("consomation_total_camion")
+router.get('/camions/:camionId/trajet/:trajetId/carburant', TrajetController.getTrajetConsommation);
+
+router.post('/trajets', trajetValidator.createTrajetValidation, validate, TrajetController.createTrajet);//iCan('create_trajet')
+router.patch('/trajets/:id', trajetValidator.updateTrajetValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet')
+
+// router.get('/trajets/pass without start', );//
+router.get('/users/:id/trajets', )//to get user's trajets for any user
+router.get('/users/trajets', TrajetController.getAllMyTrajets)//to get my trajets (just fo chauffeur)
 export default router;
