@@ -117,7 +117,9 @@ const updateTrajet = async (trajetData) => {
 
 
 /**
- * 
+ * select Trajets for a chauffeur By Id
+ * @param {String} chauffeurId
+ * @returns {Promise<Array>}
  */
 const chauffeur_s_Trajets = async (chauffeurId) => {
     return await Trajets.findByChauffeur(chauffeurId);

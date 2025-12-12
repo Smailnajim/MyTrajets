@@ -111,13 +111,13 @@ const updateTrajet = tryCatch(async (req, res) => {
 
 
 /**
- * 
+ * function contriller to select  Trajets for a chauffeur is AUTH
+ * @route GET /api/users/trajets
  */
-
-const getAllMyTrajets = async (req, res, next)=>{
+const getAllMyTrajets = tryCatch(async (req, res, next)=>{
     const Trajets = await TrajetService.chauffeur_s_Trajets(req.user?._id);
     successHandler(res, 200, "these are your Trajets those assigned to you", Trajets);
-}
+});
 
 export default {
     getTrajetsByStatus,
