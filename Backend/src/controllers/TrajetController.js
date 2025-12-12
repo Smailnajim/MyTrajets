@@ -84,7 +84,7 @@ const getCamionConsommation = tryCatch(async (req, res) => {
  */
 const getTrajetConsommation = tryCatch(async (req, res) => {
     const { camionId, trajetId } = req.params;
-    const result = await TrajetService.getTrajetConsommation(camionId, trajetId);
+    const result = await TrajetService.getTrajetConsommation(camionId, trajetId, req.user);
     return successHandler(res, 200, "camion's consommation selected by successfuly", result);
 });
 
