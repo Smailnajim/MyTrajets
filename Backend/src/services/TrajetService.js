@@ -63,6 +63,11 @@ const getTrajet = async (trajetId, user) => {
     return trajet;
 };
 
+/**
+ * get Consommation by camion id 
+ * @param {string} camionId
+ * @returns {Promise<Array>}
+ */
 const getCamionConsommation = async (camionId) => {
     const result = await Trajets.getCamionConsommation(camionId);
     if (!result || result.length === 0) {
