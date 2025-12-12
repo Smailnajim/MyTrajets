@@ -1,5 +1,6 @@
 import Trajets from "../repositories/Trajets.js";
 import Vehicles from "../repositories/Vehicles.js"
+import createError from "../utils/createError.js";
 
 /**
  * Get all trajets using a filter
@@ -42,6 +43,24 @@ const getPneuKilometrage = async () => {
  */
 const allTrajets = async () => {
     return await Trajets.findAll();
+};
+/**
+ * get a Trajet by id
+ * @param {string} trajetId
+ * @returns {Promise<Array>}
+ */
+const getTrajet = async (trajetId, user) => {
+    const trajet = await Trajets.findOneById();
+    if(!trajet) throw createError(`There is no one has this is ${trajetId}`, 404);
+    
+    const roleName = user.roleId?.name?.toLowerCase();
+    if (roleName == 'chauffeur') {
+        if (trajet.chauffeurId?._id.toString() !== user._id.toString()) {
+            throw createError("You are not authorized to view this trajet", 403);
+        }
+    }
+
+    return trajet;
 };
 
 export default {
