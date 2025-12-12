@@ -28,7 +28,15 @@ router.get('/camions/kilometrage', TrajetController.getCamionKilometrage);//isAu
 router.get('/remorques/kilometrage', TrajetController.getRemorqueKilometrage);//isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/pneus/kilometrage', TrajetController.getPneuKilometrage);////isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/vehicle/:id/kilometrage', VehicleController.getVehicle_s_PneusKilometrage);
+// **when get trajet there is a virtual field is consommation**
 router.get('/trajets', TrajetController.getAllTrajets);
 router.get('/trajets/:id', TrajetController.getTrajet);
+
+router.get('camions/:id/carburant', );
+router.get('camions/:id/trajet/:id/carburant', );
+
+router.get('trajet/carburant', );
+router.get('trajet/:id/carburant', );
+Connaître la consommation de carburant de chacun Trajet, camion
 
 export default router;

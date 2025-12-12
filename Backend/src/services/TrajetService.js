@@ -68,5 +68,6 @@ export default {
     getCamionKilometrage,
     getRemorqueKilometrage,
     allTrajets,
+    getTrajet,
     getPneuKilometrage
 };
