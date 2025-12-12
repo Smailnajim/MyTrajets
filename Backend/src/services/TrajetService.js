@@ -111,9 +111,8 @@ const createTrajet = async (trajetData) => {
  * @returns {Promise<Object>}
  */
 const updateTrajet = async (trajetData) => {
-    // trajetData.id;
-
-    return await Trajets.updateTrajet();
+    const { id, ...dataToUpd} = trajetData;
+    return await Trajets.updateTrajet(id, dataToUpd);
 };
 
 export default {

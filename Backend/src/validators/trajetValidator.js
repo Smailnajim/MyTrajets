@@ -54,6 +54,9 @@ const updateTrajetValidation = [
     body('suiviGasoilML.arrive')
         .optional()
         .isNumeric().withMessage('Arrival gasoil must be a number'),
+    body('suiviDate.depart')
+        .optional()
+        .isISO8601().withMessage('Invalid departure date format'),
     body('suiviDate.arrive')
         .optional()
         .isISO8601().withMessage('Invalid arrival date format'),
@@ -64,6 +67,15 @@ const updateTrajetValidation = [
         .optional()
         .isFloat({ min: -180, max: 180 }).withMessage('Longitude must be between -180 and 180'),
     body('emplacement.arrive.address')
+        .optional()
+        .isString().withMessage('Address must be a string'),
+    body('emplacement.depart.lat')
+        .optional()
+        .isFloat({ min: -90, max: 90 }).withMessage('Latitude must be between -90 and 90'),
+    body('emplacement.depart.lng')
+        .optional()
+        .isFloat({ min: -180, max: 180 }).withMessage('Longitude must be between -180 and 180'),
+    body('emplacement.depart.address')
         .optional()
         .isString().withMessage('Address must be a string'),
 ];

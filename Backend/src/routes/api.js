@@ -39,4 +39,5 @@ router.get('/camions/:camionId/trajet/:trajetId/carburant', TrajetController.get
 router.post('/trajets', trajetValidator.createTrajetValidation, validate, TrajetController.createTrajet);//iCan('create_trajet')
 router.patch('/trajets/:id', trajetValidator.updateTrajetValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet')
 
+// router.get('/trajets/pass without start', );//
 export default router;
