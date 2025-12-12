@@ -115,6 +115,13 @@ const updateTrajet = async (trajetData) => {
     return await Trajets.updateTrajet(id, dataToUpd);
 };
 
+
+/**
+ * 
+ */
+const chauffeur_s_Trajets = async (chauffeurId) => {
+    return await Trajets.findByChauffeur(chauffeurId);
+}
 export default {
     getAllTrajets,
     getCamionKilometrage,
@@ -125,5 +132,6 @@ export default {
     getCamionConsommation,
     getTrajetConsommation,
     updateTrajet,
+    chauffeur_s_Trajets,
     createTrajet
 };

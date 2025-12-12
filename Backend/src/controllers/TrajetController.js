@@ -109,6 +109,16 @@ const updateTrajet = tryCatch(async (req, res) => {
     return successHandler(res, 201, "Trajet created successfully", trajet);
 });
 
+
+/**
+ * 
+ */
+
+const getAllMyTrajets = async (req, res, next)=>{
+    const Trajets = await TrajetService.chauffeur_s_Trajets(req.user?._id);
+    successHandler(res, 200, "these are your Trajets those assigned to you", Trajets);
+}
+
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
@@ -119,5 +129,6 @@ export default {
     getCamionConsommation,
     getTrajetConsommation,
     createTrajet,
+    getAllMyTrajets,
     updateTrajet
 }
