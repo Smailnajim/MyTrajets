@@ -51,8 +51,8 @@ const allTrajets = async () => {
  */
 const getTrajet = async (trajetId, user) => {
     const trajet = await Trajets.findOneById();
-    if(!trajet) throw createError(`There is no one has this is ${trajetId}`, 404);
-    
+    if (!trajet) throw createError(`There is no one has this is ${trajetId}`, 404);
+
     const roleName = user.roleId?.name?.toLowerCase();
     if (roleName == 'chauffeur') {
         if (trajet.chauffeurId?._id.toString() !== user._id.toString()) {
@@ -63,11 +63,20 @@ const getTrajet = async (trajetId, user) => {
     return trajet;
 };
 
+const getCamionConsommation = async (camionId) => {
+    const result = await Trajets.getCamionConsommation(camionId);
+    if (!result || result.length === 0) {
+        throw createError(`No consumption data found for camion with id ${camionId}`, 404);
+    }
+    return result[0];
+};
+
 export default {
     getAllTrajets,
     getCamionKilometrage,
     getRemorqueKilometrage,
     allTrajets,
     getTrajet,
-    getPneuKilometrage
+    getPneuKilometrage,
+    getCamionConsommation
 };

@@ -1,4 +1,5 @@
 import Trajet from "../models/Trajet.js";
+import {Types } from "mongoose";
 
 // CREATE
 const createTrajet = async (trajet) => {
@@ -185,6 +186,53 @@ const getRemorqueKilometrage = async () => {
     ]);
 }
 
+const getCamionConsommation = async (camionId) => {
+    return await Trajet.aggregate([
+        {
+            $match: {
+                camionId: new Types.ObjectId(camionId),
+                statuts: 'completed'
+            }
+        },
+        {
+            $group: {
+                _id: '$camionId',
+                totalConsommation: {
+                    $sum: { $subtract: ['$suiviGasoilML.depart', '$suiviGasoilML.arrive'] }
+                },
+                totalKilometrage: { $sum: '$kilometrage' },
+                trajetCount: { $sum: 1 }
+            }
+        },
+        {
+            $lookup: {
+                from: 'vehicles',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'camion'
+            }
+        },
+        { $unwind: '$camion' },
+        {
+            $project: {
+                _id: 0,
+                vehicleId: '$_id',
+                plateNumber: '$vehicle.plateNumber',
+                totalConsommation: 1,
+                totalKilometrage: 1,
+                trajetCount: 1,
+                averageConsumptionPer100Km: {
+                    $cond: [
+                        { $eq: ['$totalKilometrage', 0] },
+                        0,
+                        { $multiply: [{ $divide: ['$totalConsommation', '$totalKilometrage'] }, 100] }
+                    ]
+                }
+            }
+        }
+    ]);
+}
+
 export default {
     createTrajet,
     findOne,
@@ -201,5 +249,6 @@ export default {
     deleteTrajet,
     deleteMany,
     getCamionKilometrage,
-    getRemorqueKilometrage
+    getRemorqueKilometrage,
+    getCamionConsommation
 };
