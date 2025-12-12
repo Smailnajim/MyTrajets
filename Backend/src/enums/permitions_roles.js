@@ -4,7 +4,8 @@ const permitions_roles = {
     admin: [
         permitions.accept_user,
         permitions.update_permissions,
-        permitions.show_all_trajets
+        permitions.show_all_trajets,
+        permitions.get_any_trajet,
     ],
     chauffeur: []
 };

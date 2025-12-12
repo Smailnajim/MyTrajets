@@ -80,7 +80,26 @@ const updateTrajetValidation = [
         .isString().withMessage('Address must be a string'),
 ];
 
+const updateTrajetForChauffeurValidation = [
+    param('id')
+        .notEmpty().withMessage('ID is required')
+        .isMongoId().withMessage('Invalid trajet ID format'),
+    body('statuts')
+        .optional()
+        .isIn(trajetStatus).withMessage(`Status must be one of: ${trajetStatus.join(', ')}`),
+    body('suiviGasoilML.arrive')
+        .optional()
+        .isNumeric().withMessage('Arrival gasoil must be a number'),
+    body('suiviDate.depart')
+        .optional()
+        .isISO8601().withMessage('Invalid departure date format'),
+    body('suiviDate.arrive')
+        .optional()
+        .isISO8601().withMessage('Invalid arrival date format')
+];
+
 export default {
     createTrajetValidation,
-    updateTrajetValidation
+    updateTrajetValidation,
+    updateTrajetForChauffeurValidation
 }

@@ -119,6 +119,14 @@ const getAllMyTrajets = tryCatch(async (req, res, next)=>{
     successHandler(res, 200, "these are your Trajets those assigned to you", Trajets);
 });
 
+/**
+ * 
+ */
+const getChauffeurTrajets = tryCatch(async (req,res, next)=>{
+    const {id} = req.params;
+    const Trajets = await TrajetService.chauffeur_s_Trajets(id);
+    successHandler(res, 200, `these are Trajets those assigned to ${id}`, Trajets);
+});
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
@@ -130,5 +138,6 @@ export default {
     getTrajetConsommation,
     createTrajet,
     getAllMyTrajets,
+    getChauffeurTrajets,
     updateTrajet
 }

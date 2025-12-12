@@ -40,6 +40,9 @@ router.post('/trajets', trajetValidator.createTrajetValidation, validate, Trajet
 router.patch('/trajets/:id', trajetValidator.updateTrajetValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet')
 
 // router.get('/trajets/pass without start', );//
-router.get('/users/:id/trajets', )//to get user's trajets for any user
-router.get('/users/trajets', TrajetController.getAllMyTrajets)//to get my trajets (just fo chauffeur)
+router.get('/users/:id/trajets', TrajetController.getChauffeurTrajets)//isAuth, iCan(get_any_trajet)  to get user's trajets for any user
+router.get('/users/trajets', TrajetController.getAllMyTrajets)//isAuth to get my trajets (just fo chauffeur)
+
+router.patch('users/trajets/:id', trajetValidator.updateTrajetForChauffeurValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet_Chauffeur')
+
 export default router;
