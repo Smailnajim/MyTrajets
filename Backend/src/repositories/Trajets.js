@@ -103,7 +103,7 @@ const updateArrival = async (id, arriveData) => {
         id,
         {
             'suiviDate.arrive': arriveData.date,
-            'suiviGasoilL.arrive': arriveData.gasoil,
+            'suiviGasoilML.arrive': arriveData.gasoil,
             'emplacement.arrive': arriveData.emplacement,
             'statuts': 'completed'
         },
@@ -123,6 +123,68 @@ const deleteMany = async (filters) => {
     return await Trajet.deleteMany(filters);
 }
 
+// AGGREGATIONS
+const getCamionKilometrage = async () => {
+    return await Trajet.aggregate([
+        { $match: { statuts: 'completed' } },
+        {
+            $group: {
+                _id: '$camionId',
+                totalKilometrage: { $sum: '$kilometrage' },
+                trajetCount: { $sum: 1 }
+            }
+        },
+        {
+            $lookup: {
+                from: 'vehicles',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'vehicle'
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                vehicleId: '$_id',
+                plateNumber: '$vehicle.plateNumber',
+                totalKilometrage: 1,
+                trajetCount: 1
+            }
+        }
+    ]);
+}
+
+const getRemorqueKilometrage = async () => {
+    return await Trajet.aggregate([
+        { $match: { statuts: 'completed', remorqueId: { $exists: true, $ne: null } } },
+        {
+            $group: {
+                _id: '$remorqueId',
+                totalKilometrage: { $sum: '$kilometrage' },
+                trajetCount: { $sum: 1 }
+            }
+        },
+        {
+            $lookup: {
+                from: 'vehicles',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'vehicle'
+            }
+        },
+        { $unwind: '$vehicle' },
+        {
+            $project: {
+                _id: 0,
+                vehicleId: '$_id',
+                plateNumber: '$vehicle.plateNumber',
+                totalKilometrage: 1,
+                trajetCount: 1
+            }
+        }
+    ]);
+}
+
 export default {
     createTrajet,
     findOne,
@@ -137,5 +199,7 @@ export default {
     updateStatus,
     updateArrival,
     deleteTrajet,
-    deleteMany
+    deleteMany,
+    getCamionKilometrage,
+    getRemorqueKilometrage
 };

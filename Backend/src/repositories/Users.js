@@ -29,6 +29,10 @@ const findAllWithFilters = async (filters = {}) => {
     return await User.find(filters).select('-password').populate('roleId', 'name');
 }
 
+const findOneByIdWithRole = async (id) => {
+    return await User.findById(id).populate('roleId', 'name permissions');
+}
+
 // UPDATE
 const updateUserStatus = async ({ id, etat }) => {
     return await User.findByIdAndUpdate(id, { etat }, { new: true }).select('-password');
@@ -56,6 +60,7 @@ export default {
     createUser,
     findOneByEmail,
     findOneById,
+    findOneByIdWithRole,
     findAll,
     findAllWithFilters,
     updateUserStatus,
