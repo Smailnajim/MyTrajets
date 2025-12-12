@@ -76,6 +76,14 @@ const getCamionConsommation = async (camionId) => {
     return result[0];
 };
 
+
+/**
+ * 
+ * @param {String} camionId 
+ * @param {String} trajetId 
+ * @param {Object} user 
+ * @returns {Promise<Object>}
+ */
 const getTrajetConsommation = async (camionId, trajetId, user = null) => {
     const trajet = await Trajets.findOne({ _id: trajetId, camionId: camionId });
     if (!trajet) throw createError(`Trajet ${trajetId} not found for camion ${camionId}`, 404);
