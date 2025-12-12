@@ -105,6 +105,16 @@ const getTrajetConsommation = async (camionId, trajetId, user = null) => {
 const createTrajet = async (trajetData) => {
     return await Trajets.createTrajet(trajetData);
 };
+/**
+ * Create a new trajet
+ * @param {Object} trajetData
+ * @returns {Promise<Object>}
+ */
+const updateTrajet = async (trajetData) => {
+    // trajetData.id;
+
+    return await Trajets.updateTrajet();
+};
 
 export default {
     getAllTrajets,
@@ -115,5 +125,6 @@ export default {
     getPneuKilometrage,
     getCamionConsommation,
     getTrajetConsommation,
+    updateTrajet,
     createTrajet
 };

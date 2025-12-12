@@ -1,6 +1,7 @@
 import TrajetService from "../services/TrajetService.js";
 import successHandler from "../utils/successHandler.js";
 import tryCatch from "../middlewares/tryCatch.js";
+import { matchedData } from "express-validator";
 
 /**
  * Get trajets filtered by status
@@ -93,7 +94,18 @@ const getTrajetConsommation = tryCatch(async (req, res) => {
  * @route POST /api/trajets
  */
 const createTrajet = tryCatch(async (req, res) => {
-    const trajet = await TrajetService.createTrajet(req.body);
+    const body = matchedData(req, { locations: ["body"] });
+    const trajet = await TrajetService.createTrajet(body);
+    return successHandler(res, 201, "Trajet created successfully", trajet);
+});
+
+/**
+ * Update a new trajet
+ * @route Patch /api/trajets
+ */
+const updateTrajet = tryCatch(async (req, res) => {
+    const body = matchedData(req, { locations: ['params', 'body'] });
+    const trajet = await TrajetService.updateTrajet(body);
     return successHandler(res, 201, "Trajet created successfully", trajet);
 });
 
@@ -106,5 +118,6 @@ export default {
     getPneuKilometrage,
     getCamionConsommation,
     getTrajetConsommation,
-    createTrajet
+    createTrajet,
+    updateTrajet
 }

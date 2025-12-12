@@ -7,7 +7,7 @@ import isAuth from "../middlewares/isAuth.js";
 import iCan from "../middlewares/iCan.js";
 import permitions from "../enums/permitions.js";
 import VehicleController from "../controllers/VehicleController.js";
-import { createTrajetValidation } from "../validators/trajetValidator.js";
+import trajetValidator from "../validators/trajetValidator.js";
 
 const router = express.Router();
 
@@ -36,6 +36,7 @@ router.get('/trajets/:id', TrajetController.getTrajet);
 router.get('/camions/:id/carburant', TrajetController.getCamionConsommation);//iCan("consomation_total_camion")
 router.get('/camions/:camionId/trajet/:trajetId/carburant', TrajetController.getTrajetConsommation);
 
-router.post('/trajets', createTrajetValidation, validate, TrajetController.createTrajet);//iCan('create_trajet')
+router.post('/trajets', trajetValidator.createTrajetValidation, validate, TrajetController.createTrajet);//iCan('create_trajet')
+router.patch('/trajets/:id', trajetValidator.updateTrajetValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet')
 
 export default router;

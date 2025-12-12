@@ -5,7 +5,7 @@ import trajetStatus from "../enums/trajetStatus.js";
 
 
 
-export const createTrajetValidation = [
+const createTrajetValidation = [
     body('chauffeurId')
         .notEmpty().withMessage('Chauffeur ID is required')
         .isMongoId().withMessage('Invalid chauffeur ID format'),
@@ -35,7 +35,7 @@ export const createTrajetValidation = [
         .isString().withMessage('Address must be a string'),
 ];
 
-export const updateTrajetValidation = [
+const updateTrajetValidation = [
     param('id')
         .notEmpty().withMessage('ID is required')
         .isMongoId().withMessage('Invalid trajet ID format'),
@@ -68,10 +68,7 @@ export const updateTrajetValidation = [
         .isString().withMessage('Address must be a string'),
 ];
 
-export const validate = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return next(createError("Validation failed", 400, errors.array()));
-    }
-    next();
-};
+export default {
+    createTrajetValidation,
+    updateTrajetValidation
+}
