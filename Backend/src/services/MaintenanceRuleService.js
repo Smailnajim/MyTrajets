@@ -15,6 +15,12 @@ const createRule = async (ruleData) => {
     return await MaintenanceRules.createRule(ruleData);
 };
 
+const getAllRules = async () => {
+    return await MaintenanceRules.findAll();
+};
+
+
 export default {
     createRule,
+    getAllRules
 };
