@@ -39,7 +39,7 @@ router.get('/camions/:camionId/trajet/:trajetId/carburant', TrajetController.get
 router.post('/trajets', trajetValidator.createTrajetValidation, validate, TrajetController.createTrajet);//iCan('create_trajet')
 router.patch('/trajets/:id', trajetValidator.updateTrajetValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet')
 
-// router.get('/trajets/pass without start', );//
+router.get('/trajets/not-started', TrajetController.trajetsNotStarted);//
 router.get('/users/:id/trajets', TrajetController.getChauffeurTrajets)//isAuth, iCan(get_any_trajet)  to get user's trajets for any user
 router.get('/users/trajets', TrajetController.getAllMyTrajets)//isAuth to get my trajets (just fo chauffeur)
 

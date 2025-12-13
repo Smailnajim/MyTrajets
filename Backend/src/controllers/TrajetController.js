@@ -120,13 +120,24 @@ const getAllMyTrajets = tryCatch(async (req, res, next)=>{
 });
 
 /**
- * 
+ * GET allt trajets those assigned to chauffeur
+ * @route GET /api/users/:id/trajets
  */
 const getChauffeurTrajets = tryCatch(async (req,res, next)=>{
     const {id} = req.params;
     const Trajets = await TrajetService.chauffeur_s_Trajets(id);
     successHandler(res, 200, `these are Trajets those assigned to ${id}`, Trajets);
 });
+
+/**
+ * GET trajets those not change theme status to "in_progress" or "completed"
+ * and them "suiviDate.depart" in pass
+ * @route GET /api/trajets/not-started
+ */
+const trajetsNotStarted = tryCatch(async()=>{
+
+});
+
 export default {
     getTrajetsByStatus,
     getCamionKilometrage,
@@ -139,5 +150,6 @@ export default {
     createTrajet,
     getAllMyTrajets,
     getChauffeurTrajets,
+    trajetsNotStarted,
     updateTrajet
 }
