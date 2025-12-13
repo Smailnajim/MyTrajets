@@ -7,7 +7,7 @@ import createError from '../utils/createError.js';
  * @returns {Promise<Object>}
  */
 const createRule = async (ruleData) => {
-    checkIRedundant(ruleData.type, ruleData.vehicleType);
+    checkIfRedundant(ruleData.type, ruleData.vehicleType);
     return await MaintenanceRules.createRule(ruleData);
 };
 
@@ -18,7 +18,7 @@ const getAllRules = async () => {
 const updateRule = async (id, updateData) => {
     const rule = await MaintenanceRules.findById(id);
     if (!rule) throw createError('Rule not found', 404);
-    checkIRedundant(rule.type, rule.vehicleType);
+    checkIfRedundant(rule.type, rule.vehicleType);
     return await MaintenanceRules.updateRule(id, updateData);
 };
 
@@ -28,7 +28,7 @@ const deleteRule = async (id) => {
     return await MaintenanceRules.deleteRule(id);
 };
 
-const checkIRedundant = async (type, vehicleType) => {
+const checkIfRedundant = async (type, vehicleType) => {
     // Check if rule already exists for this type and vehicleType
     const existingRule = await MaintenanceRules.findByType(type, vehicleType);
     if (existingRule) {
