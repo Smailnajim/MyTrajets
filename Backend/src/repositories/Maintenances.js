@@ -1,63 +1,49 @@
-import Maintenance from "../models/Maintenance.js";
+import Maintenance from '../models/Maintenance.js';
 
 // CREATE
-const createMaintenance = async ({ vehicleId, description, suiviDate, coutDH }) => {
-    const maintenance = new Maintenance({
-        vehicleId,
-        description,
-        suiviDate,
-        coutDH
-    });
+const createMaintenance = async (data) => {
+    const maintenance = new Maintenance(data);
     return await maintenance.save();
-}
+};
 
 // READ
 const findAll = async () => {
-    return await Maintenance.find().populate('vehicleId');
-}
+    return await Maintenance.find()
+        .populate('vehicleId', 'plateNumber type status');
+};
 
-const findOneById = async (id) => {
+const findById = async (id) => {
     return await Maintenance.findById(id).populate('vehicleId');
-}
+};
 
-const findByVehicleId = async (vehicleId) => {
-    return await Maintenance.find({ vehicleId }).populate('vehicleId');
-}
+const findLatestByVehicleAndType = async (vehicleId, type) => {
+    return await Maintenance.findOne({ vehicleId, type })
+        .sort({ 'suiviDate.dateFin': -1 }) // Get the most recent one
+        .limit(1);
+};
 
-const findAllWithFilters = async (filters = {}) => {
-    return await Maintenance.find(filters).populate('vehicleId');
-}
+const findByVehicle = async (vehicleId) => {
+    return await Maintenance.find({ vehicleId })
+        .populate('vehicleId', 'plateNumber type status')
+        .sort({ 'suiviDate.dateDebut': -1 });
+};
 
 // UPDATE
-const updateMaintenance = async (id, updateData) => {
-    return await Maintenance.findByIdAndUpdate(id, updateData, { new: true }).populate('vehicleId');
-}
-
-const updateSuiviDate = async (id, suiviDate) => {
-    return await Maintenance.findByIdAndUpdate(
-        id,
-        { suiviDate },
-        { new: true }
-    ).populate('vehicleId');
-}
+const update = async (id, data) => {
+    return await Maintenance.findByIdAndUpdate(id, data, { new: true });
+};
 
 // DELETE
-const deleteMaintenance = async (id) => {
+const remove = async (id) => {
     return await Maintenance.findByIdAndDelete(id);
-}
-
-const deleteByVehicleId = async (vehicleId) => {
-    return await Maintenance.deleteMany({ vehicleId });
-}
+};
 
 export default {
     createMaintenance,
     findAll,
-    findOneById,
-    findByVehicleId,
-    findAllWithFilters,
-    updateMaintenance,
-    updateSuiviDate,
-    deleteMaintenance,
-    deleteByVehicleId
+    findById,
+    findLatestByVehicleAndType,
+    findByVehicle,
+    update,
+    remove
 };

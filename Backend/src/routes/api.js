@@ -10,6 +10,7 @@ import VehicleController from "../controllers/VehicleController.js";
 import trajetValidator from "../validators/trajetValidator.js";
 import MaintenanceRuleController from "../controllers/MaintenanceRuleController.js";
 import maintenanceRuleValidator from "../validators/maintenanceRuleValidator.js";
+import MaintenanceController from "../controllers/MaintenanceController.js";
 
 const router = express.Router();
 
@@ -51,4 +52,9 @@ router.post('/Maintenance-rules', maintenanceRuleValidator.createRuleValidation,
 router.get('/maintenance-rules', MaintenanceRuleController.getAllRules);
 router.patch('/maintenance-rules/:id', maintenanceRuleValidator.updateRuleValidation, validate, MaintenanceRuleController.updateRule);
 router.delete('/maintenance-rules/:id', MaintenanceRuleController.deleteRule);
+
+
+router.post('/maintenances', MaintenanceController.createMaintenance); // Validate later
+router.get('/maintenances', MaintenanceController.getAllMaintenances);
+router.get('/maintenance/alerts', MaintenanceController.getFleetStatus); // The Dashboard Endpoint
 export default router;
