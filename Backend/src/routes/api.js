@@ -50,5 +50,5 @@ router.patch('/users/trajets/:id', trajetValidator.updateTrajetForChauffeurValid
 router.post('/Maintenance-rules', maintenanceRuleValidator.createRuleValidation, validate, MaintenanceRuleController.createRule);
 router.get('/maintenance-rules', MaintenanceRuleController.getAllRules);
 router.patch('/maintenance-rules/:id', maintenanceRuleValidator.updateRuleValidation, validate, MaintenanceRuleController.updateRule);
-
+router.delete('/maintenance-rules/:id', MaintenanceRuleController.deleteRule);
 export default router;

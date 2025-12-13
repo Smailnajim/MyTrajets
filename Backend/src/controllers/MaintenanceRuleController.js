@@ -30,8 +30,19 @@ const updateRule = tryCatch(async (req, res) => {
     return successHandler(res, 200, "Maintenance rule updated successfully", rule);
 });
 
+/**
+ * Delete a maintenance rule
+ * @route DELETE /api/maintenance-rules/:id
+ */
+const deleteRule = tryCatch(async (req, res) => {
+    const { id } = req.params;
+    await MaintenanceRuleService.deleteRule(id);
+    return successHandler(res, 200, "Maintenance rule deleted successfully");
+});
+
 export default {
     createRule,
     getAllRules,
-    updateRule
+    updateRule,
+    deleteRule
 };
