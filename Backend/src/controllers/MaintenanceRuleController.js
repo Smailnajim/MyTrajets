@@ -20,7 +20,18 @@ const getAllRules = tryCatch(async (req, res) => {
     return successHandler(res, 200, "Maintenance rules retrieved successfully", rules);
 });
 
+/**
+ * Update a maintenance rule
+ * @route PATCH /api/maintenance-rules/:id
+ */
+const updateRule = tryCatch(async (req, res) => {
+    const { id } = req.params;
+    const rule = await MaintenanceRuleService.updateRule(id, req.body);
+    return successHandler(res, 200, "Maintenance rule updated successfully", rule);
+});
+
 export default {
     createRule,
-    getAllRules
+    getAllRules,
+    updateRule
 };

@@ -19,8 +19,14 @@ const getAllRules = async () => {
     return await MaintenanceRules.findAll();
 };
 
+const updateRule = async (id, updateData) => {
+    const rule = await MaintenanceRules.findById(id);
+    if (!rule) throw createError('Rule not found', 404);
+    return await MaintenanceRules.updateRule(id, updateData);
+};
 
 export default {
     createRule,
-    getAllRules
+    getAllRules,
+    updateRule
 };
