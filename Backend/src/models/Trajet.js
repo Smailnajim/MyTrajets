@@ -53,8 +53,14 @@ const trajetSchema = new Schema({
         }
     },
     kilometrage:{
-        type: Number,
-        default: 0
+        depart:{
+            type: Number,
+            default: 0
+        },
+        arrive:{
+            type: Number,
+            default: 0
+        }
     }
 }, {
     collection: 'trajets',
