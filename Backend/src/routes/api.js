@@ -8,6 +8,8 @@ import iCan from "../middlewares/iCan.js";
 import permitions from "../enums/permitions.js";
 import VehicleController from "../controllers/VehicleController.js";
 import trajetValidator from "../validators/trajetValidator.js";
+import MaintenanceRuleController from "../controllers/MaintenanceRuleController.js";
+import maintenanceRuleValidator from "../validators/maintenanceRuleValidator.js";
 
 const router = express.Router();
 
@@ -43,6 +45,8 @@ router.get('/trajets/not-started', TrajetController.trajetsNotStarted);//
 router.get('/users/:id/trajets', TrajetController.getChauffeurTrajets)//isAuth, iCan(get_any_trajet)  to get user's trajets for any user
 router.get('/users/trajets', TrajetController.getAllMyTrajets)//isAuth to get my trajets (just fo chauffeur)
 
-router.patch('users/trajets/:id', trajetValidator.updateTrajetForChauffeurValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet_Chauffeur')
+router.patch('/users/trajets/:id', trajetValidator.updateTrajetForChauffeurValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet_Chauffeur')
+
+router.post('/Maintenance-rules', maintenanceRuleValidator.createRuleValidation, validate, MaintenanceRuleController.createRule);
 
 export default router;
