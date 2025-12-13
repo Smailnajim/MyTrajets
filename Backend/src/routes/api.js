@@ -48,5 +48,7 @@ router.get('/users/trajets', TrajetController.getAllMyTrajets)//isAuth to get my
 router.patch('/users/trajets/:id', trajetValidator.updateTrajetForChauffeurValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet_Chauffeur')
 
 router.post('/Maintenance-rules', maintenanceRuleValidator.createRuleValidation, validate, MaintenanceRuleController.createRule);
-
+router.get('/maintenance-rules', MaintenanceRuleController.getAllRules);
+router.patch('/maintenance-rules/:id', maintenanceRuleValidator.updateRuleValidation, validate, MaintenanceRuleController.updateRule);
+router.delete('/maintenance-rules/:id', MaintenanceRuleController.deleteRule);
 export default router;
