@@ -30,7 +30,7 @@ const vehicleSchema = new Schema({
     pneus: [{
         serialNumber: { type: String },
         position: { type: String },
-        usure: {type: Number, efault: 0, min: 0},//change from % to km
+        usure: {type: Number, efault: 0, min: 0},//change from % to km this is "Rule" how many km to change, "maintenance"
         remplacement: {type: Boolean, default: false},
         kilometrageActuel: { type: Number, default: 0, min: 0 }
     }]
