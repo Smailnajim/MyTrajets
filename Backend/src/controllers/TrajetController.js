@@ -114,7 +114,7 @@ const updateTrajet = tryCatch(async (req, res) => {
  * function contriller to select  Trajets for a chauffeur is AUTH
  * @route GET /api/users/trajets
  */
-const getAllMyTrajets = tryCatch(async (req, res, next)=>{
+const getAllMyTrajets = tryCatch(async (req, res, next) => {
     const Trajets = await TrajetService.chauffeur_s_Trajets(req.user?._id);
     successHandler(res, 200, "these are your Trajets those assigned to you", Trajets);
 });
@@ -130,12 +130,12 @@ const getChauffeurTrajets = tryCatch(async (req,res, next)=>{
 });
 
 /**
- * GET trajets those not change theme status to "in_progress" or "completed"
- * and them "suiviDate.depart" in pass
+ * GET trajets that have not started despite departure time passing
  * @route GET /api/trajets/not-started
  */
-const trajetsNotStarted = tryCatch(async()=>{
-
+const trajetsNotStarted = tryCatch(async (req, res) => {
+    const trajets = await TrajetService.trajetsNotStarted();
+    return successHandler(res, 200, "Trajets not started retrieved successfully", trajets);
 });
 
 export default {

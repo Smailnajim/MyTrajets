@@ -124,6 +124,14 @@ const updateTrajet = async (trajetData) => {
 const chauffeur_s_Trajets = async (chauffeurId) => {
     return await Trajets.findByChauffeur(chauffeurId);
 }
+/**
+ * trajets that have not started despite departure time passing
+ * @returns {Promise<Array>}
+ */
+const trajetsNotStarted = async () => {
+    return await Trajets.findNotStarted();
+};
+
 export default {
     getAllTrajets,
     getCamionKilometrage,
@@ -135,5 +143,6 @@ export default {
     getTrajetConsommation,
     updateTrajet,
     chauffeur_s_Trajets,
-    createTrajet
+    createTrajet,
+    trajetsNotStarted
 };

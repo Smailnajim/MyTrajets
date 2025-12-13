@@ -1,5 +1,5 @@
 import Trajet from "../models/Trajet.js";
-import {Types } from "mongoose";
+import { Types } from "mongoose";
 
 // CREATE
 const createTrajet = async (trajet) => {
@@ -233,6 +233,16 @@ const getCamionConsommation = async (camionId) => {
     ]);
 }
 
+const findNotStarted = async () => {
+    return await Trajet.find({
+        statuts: { $nin: ['in_progress', 'completed'] },
+        'suiviDate.depart': { $lt: new Date() }
+    })
+        .populate('chauffeurId', 'firstName lastName email')
+        .populate('camionId')
+        .populate('remorqueId');
+}
+
 export default {
     createTrajet,
     findOne,
@@ -250,5 +260,6 @@ export default {
     deleteMany,
     getCamionKilometrage,
     getRemorqueKilometrage,
-    getCamionConsommation
+    getCamionConsommation,
+    findNotStarted
 };
