@@ -19,6 +19,10 @@ const findByType = async (type, vehicleType) => {
     return await MaintenanceRule.findOne({ type, vehicleType });
 };
 
+const findByVehicleType = async (vehicleType) => {
+    return await MaintenanceRule.find({ vehicleType });
+};
+
 // UPDATE
 const updateRule = async (id, updateData) => {
     return await MaintenanceRule.findByIdAndUpdate(id, updateData, { new: true });
@@ -32,7 +36,10 @@ export default {
     createRule,
     findAll,
     findById,
+    findById,
     findByType,
+    findByVehicleType,
+    updateRule,
     updateRule,
     deleteRule
 };
