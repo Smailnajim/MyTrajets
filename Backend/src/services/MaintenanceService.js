@@ -38,7 +38,6 @@ const checkVehicleStatus = async (vehicleId) => {
     if (!vehicle) return;
 
     const relevantRules = await MaintenanceRules.findByVehicleType(vehicle.type);
-console.log(relevantRules);//tynxpe
     const statusReport = [];
 
     for (const rule of relevantRules){

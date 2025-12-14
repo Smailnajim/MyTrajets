@@ -1,11 +1,29 @@
-import MaintenanceService from '../../services/MaintenanceService.js';
-import Maintenances from '../../repositories/Maintenances.js';
-import Vehicles from '../../repositories/Vehicles.js';
-import MaintenanceRules from '../../repositories/MaintenanceRules.js';
+import { jest, describe, it, expect, beforeEach } from '@jest/globals';
 
-jest.mock('../../repositories/Maintenances.js');
-jest.mock('../../repositories/Vehicles.js');
-jest.mock('../../repositories/MaintenanceRules.js');
+jest.unstable_mockModule('../../repositories/Maintenances.js', () => ({
+    default: {
+        createMaintenance: jest.fn(),
+        findLatestByVehicleAndType: jest.fn(),
+    }
+}));
+
+jest.unstable_mockModule('../../repositories/Vehicles.js', () => ({
+    default: {
+        findOneById: jest.fn(),
+        findAll: jest.fn()
+    }
+}));
+
+jest.unstable_mockModule('../../repositories/MaintenanceRules.js', () => ({
+    default: {
+        findByVehicleType: jest.fn()
+    }
+}));
+
+const MaintenanceService = (await import('../../services/MaintenanceService.js')).default;
+const Maintenances = (await import('../../repositories/Maintenances.js')).default;
+const Vehicles = (await import('../../repositories/Vehicles.js')).default;
+const MaintenanceRules = (await import('../../repositories/MaintenanceRules.js')).default;
 
 describe('MaintenanceService Unit Tests', () => {
 
@@ -64,8 +82,7 @@ describe('MaintenanceService Unit Tests', () => {
         });
 
         it('should return "good" status when mileage is within limits', async () => {
-            // 1. Arrange
-            const vehicleId = 'vehicle123';
+            const vehicleId = '123';
             const mockVehicle = { _id: vehicleId, type: 'camion', kilometrageTotal: 15000 };
             const mockRule = { type: 'vidange', vehicleType: 'camion', intervalKm: 10000 };
             const mockLastMaintenance = { kmAtMaintenance: 10000 };
@@ -74,7 +91,6 @@ describe('MaintenanceService Unit Tests', () => {
             MaintenanceRules.findByVehicleType.mockResolvedValue([mockRule]);
             Maintenances.findLatestByVehicleAndType.mockResolvedValue(mockLastMaintenance);
 
-            // 2. Act
             const result = await MaintenanceService.checkVehicleStatus(vehicleId);
 
             expect(result.report[0].status).toBe('good');
