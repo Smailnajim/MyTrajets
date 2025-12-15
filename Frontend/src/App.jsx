@@ -12,6 +12,7 @@ import TrajetsList from './pages/trajets/TrajetsList';
 import TrajetDetail from './pages/trajets/TrajetDetail';
 import CreateVehicle from './pages/admin/CreateVehicle';
 import VehiclesList from './pages/admin/VehiclesList';
+import CreateTrajet from './pages/trajets/CreateTrajet';
 
 function App() {
   return (
@@ -38,6 +39,11 @@ function App() {
           <Route path="/trajets/:id" element={
             <ProtectedRoute>
               <TrajetDetail />
+            </ProtectedRoute>
+          } />
+          <Route path="/trajets/new" element={
+            <ProtectedRoute>
+              <CreateTrajet />
             </ProtectedRoute>
           } />
 

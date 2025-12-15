@@ -101,7 +101,7 @@ const TrajetDetail = () => {
                             {/* Camion */}
                             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                                 <h3 className="text-sm text-gray-400 mb-2">Camion</h3>
-                                <p className="text-white font-medium">{trajet.camionId?.immatriculation || '-'}</p>
+                                <p className="text-white font-medium">{trajet.camionId?.plateNumber || '-'}</p>
                                 <p className="text-gray-400 text-sm capitalize">{trajet.camionId?.type}</p>
                             </div>
 
