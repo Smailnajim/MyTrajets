@@ -7,17 +7,21 @@ const maintenanceSchema = new Schema({
         ref: 'Vehicle',
         required: true
     },
+    description: {
+        type: String,
+        trim: true
+    },
     type: {
         type: String,
         enum: maintenanceType,
         required: true
     },
-    description: {
-        type: String,
+    kmAtMaintenance: {
+        type: Number,
         required: true,
-        trim: true
+        default: 0
     },
-    suiviDate:{
+    suiviDate: {
         dateDebut: {
             type: Date,
             default: Date.now
@@ -30,7 +34,7 @@ const maintenanceSchema = new Schema({
         type: Number,
         default: null
     }
-}, {collection: 'maintenances', timestamps: true});
+}, { collection: 'maintenances', timestamps: true });
 
 const Maintenance = model("Maintenance", maintenanceSchema);
 export default Maintenance;

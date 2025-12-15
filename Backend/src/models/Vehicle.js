@@ -23,20 +23,18 @@ const vehicleSchema = new Schema({
         enum: vehicleStatus,
         default: "available"
     },
-    kilometrageActuel: {
-        type: Number,
-        default: 0
-    },
-    derniereVidangeDhuileKm: {
+    kilometrageTotal: {
         type: Number,
         default: 0
     },
     pneus: [{
         serialNumber: { type: String },
         position: { type: String },
-        kilometrageActuel: { type: Number, default: 0 }
+        kmAtMaintenance: { type: Number, efault: 0, min: 0 },//change from % to km this is "Rule" how many km to change, "maintenance"
+        remplacement: { type: Boolean, default: false },
+        kilometrageActuel: { type: Number, default: 0, min: 0 }
     }]
-}, {collection: 'vehicles', timestamps: true});
+}, { collection: 'vehicles', timestamps: true });
 
 const Vehicle = model("Vehicle", vehicleSchema);
 export default Vehicle;
