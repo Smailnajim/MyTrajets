@@ -1,5 +1,5 @@
 import express from "express";
-import { register, login, refreshToken, acceptUser, getAllUsers } from "../controllers/AuthController.js";
+import { register, login, refreshToken, acceptUser, getAllUsers, changeUserRole, getAllRoles } from "../controllers/AuthController.js";
 import { syncPermissions } from "../controllers/RoleController.js";
 import TrajetController from "../controllers/TrajetController.js";
 import { registerValidation, loginValidation, validate } from "../validators/authValidator.js";
@@ -26,7 +26,9 @@ router.post('/users/login', loginValidation, validate, login);
 router.post('/users/refresh-token', refreshToken);
 router.get('/users', getAllUsers);//isAuth, iCan(permitions.accept_user),
 router.patch('/users/:id/accept', acceptUser);//isAuth, iCan(permitions.accept_user),
+router.patch('/users/:id/role', changeUserRole);//isAuth, iCan(permitions.update_permissions),
 
+router.get('/roles', getAllRoles);//isAuth,
 router.post('/roles/sync-permissions', syncPermissions);//isAuth, iCan(permitions.update_permissions),
 
 router.get('/trajets/status/:status', TrajetController.getTrajetsByStatus);//isAuth,

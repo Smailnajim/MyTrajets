@@ -105,10 +105,30 @@ const getAllUsersService = async () => {
     return users;
 };
 
+const changeUserRoleService = async (userId, roleId) => {
+    const user = await Users.findOneById(userId);
+    if (!user) {
+        throw createError("User not found", 404);
+    }
+    const role = await Roles.findOneById(roleId);
+    if (!role) {
+        throw createError("Role not found", 404);
+    }
+    const updatedUser = await Users.updateUser(userId, { roleId });
+    return await Users.findOneByIdWithRole(userId);
+};
+
+const getAllRolesService = async () => {
+    const roles = await Roles.findAll();
+    return roles;
+};
+
 export default {
     registerService,
     loginService,
     refreshTokenService,
     acceptUserService,
-    getAllUsersService
+    getAllUsersService,
+    changeUserRoleService,
+    getAllRolesService
 };
