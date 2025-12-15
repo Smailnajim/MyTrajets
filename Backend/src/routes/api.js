@@ -43,7 +43,7 @@ router.post('/vehicles/:id/pneus',VehicleController.addPneuToVehicle);
 
 // **when get trajet there is a virtual field is consommation**
 router.get('/trajets', TrajetController.getAllTrajets);
-router.get('/trajets/:id', TrajetController.getTrajet);
+router.get('/trajets/:id', isAuth, TrajetController.getTrajet);
 
 router.get('/camions/:id/carburant',  TrajetController.getCamionConsommation);//isAuth, iCan(permitions.consomation_total_camion),
 router.get('/camions/:camionId/trajet/:trajetId/carburant', TrajetController.getTrajetConsommation);// isAuth,

@@ -64,7 +64,9 @@ const getAllTrajets = tryCatch(async (req, res, next) => {
  */
 const getTrajet = tryCatch(async (req, res, next) => {
     const { id: trajetId } = req.params;
+    console.log(trajetId);
     const user = req.user;
+    console.log(user);
     const trajet = await TrajetService.getTrajet(trajetId, user);
     return successHandler(res, 200, "get trajet by successfully", trajet);
 })
