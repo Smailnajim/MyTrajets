@@ -7,9 +7,21 @@ export const getAllVehicles = async (filters = {}) => {
     return response.data;
 };
 
+// Get vehicle by ID
+export const getVehicleById = async (vehicleId) => {
+    const response = await api.get(`/vehicles/${vehicleId}`);
+    return response.data;
+};
+
 // Create a new vehicle
 export const createVehicle = async (vehicleData) => {
     const response = await api.post('/vehicles', vehicleData);
+    return response.data;
+};
+
+// Add pneu to vehicle
+export const addPneuToVehicle = async (vehicleId, pneuData) => {
+    const response = await api.post(`/vehicles/${vehicleId}/pneus`, pneuData);
     return response.data;
 };
 

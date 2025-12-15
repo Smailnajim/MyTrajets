@@ -24,6 +24,38 @@ const getAllVehicles = async (filters = {}) => {
 };
 
 /**
+ * Get vehicle by ID
+ * @param {String} vehicleId
+ * @returns {Promise<Object>}
+ */
+const getVehicleById = async (vehicleId) => {
+    const vehicle = await Vehicles.findOneById(vehicleId);
+    if (!vehicle) {
+        throw createError("Vehicle not found", 404);
+    }
+    return vehicle;
+};
+
+/**
+ * Add a pneu to vehicle
+ * @param {String} vehicleId
+ * @param {Object} pneuData
+ * @returns {Promise<Object>}
+ */
+const addPneuToVehicle = async (vehicleId, pneuData) => {
+    const vehicle = await Vehicles.findOneById(vehicleId);
+    if (!vehicle) {
+        throw createError("Vehicle not found", 404);
+    }
+    // Check for duplicate serial number
+    const existingPneu = vehicle.pneus.find(p => p.serialNumber === pneuData.serialNumber);
+    if (existingPneu) {
+        throw createError("Pneu with this serial number already exists on this vehicle", 409);
+    }
+    return await Vehicles.addPneu(vehicleId, pneuData);
+};
+
+/**
  * get a Vehicle's pneus using id
  * @param {String} vehicleId
  * @returns {Promise<Array>}
@@ -35,5 +67,7 @@ const getVehicle_s_PneusKilometrage = async (vehicleId) => {
 export default {
     createVehicle,
     getAllVehicles,
+    getVehicleById,
+    addPneuToVehicle,
     getVehicle_s_PneusKilometrage
 }

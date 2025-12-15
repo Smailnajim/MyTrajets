@@ -25,6 +25,26 @@ const getAllVehicles = tryCatch(async (req, res, next) => {
 });
 
 /**
+ * Get vehicle by ID
+ * @route GET /api/vehicles/:id
+ */
+const getVehicleById = tryCatch(async (req, res, next) => {
+    const { id } = req.params;
+    const vehicle = await VehicleService.getVehicleById(id);
+    successHandler(res, 200, "Vehicle fetched successfully", vehicle);
+});
+
+/**
+ * Add pneu to vehicle
+ * @route POST /api/vehicles/:id/pneus
+ */
+const addPneuToVehicle = tryCatch(async (req, res, next) => {
+    const { id } = req.params;
+    const vehicle = await VehicleService.addPneuToVehicle(id, req.body);
+    successHandler(res, 201, "Pneu added to vehicle successfully", vehicle);
+});
+
+/**
  * Get total kilometrage for spicifique vehicle's pneus by _id 
  * @route GET /api/vehicle/:id/kilometrage 
  */
@@ -37,5 +57,7 @@ const getVehicle_s_PneusKilometrage = tryCatch(async (req, res, next) => {
 export default {
     createVehicle,
     getAllVehicles,
+    getVehicleById,
+    addPneuToVehicle,
     getVehicle_s_PneusKilometrage
 }
