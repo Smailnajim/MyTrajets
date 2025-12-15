@@ -10,6 +10,7 @@ import UsersManagement from './pages/admin/UsersManagement';
 import RolesManagement from './pages/admin/RolesManagement';
 import TrajetsList from './pages/trajets/TrajetsList';
 import TrajetDetail from './pages/trajets/TrajetDetail';
+import CreateVehicle from './pages/admin/CreateVehicle';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route index element={<Navigate to="/admin/users" replace />} />
             <Route path="users" element={<UsersManagement />} />
             <Route path="roles" element={<RolesManagement />} />
+            <Route path="camions/new" element={<CreateVehicle />} />
           </Route>
 
           {/* Redirect unknown routes */}
