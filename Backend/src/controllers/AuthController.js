@@ -8,7 +8,7 @@ import tryCatch from "../middlewares/tryCatch.js";
  */
 export const register = tryCatch(async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
-    const user = await AuthService.registerService({ firstName, lastName, email, password});
+    const user = await AuthService.registerService({ firstName, lastName, email, password });
 
     return successHandler(res, 201, "User registered successfully and Wait Admin ACCEPT YOU", user);
 });
@@ -62,4 +62,13 @@ export const acceptUser = tryCatch(async (req, res, next) => {
     const { id } = req.params;
     const user = await AuthService.acceptUserService(id);
     return successHandler(res, 200, "User authorized successfully", user);
+});
+
+/**
+ * Get all users (Admin only)
+ * @route GET /api/users
+ */
+export const getAllUsers = tryCatch(async (req, res, next) => {
+    const users = await AuthService.getAllUsersService();
+    return successHandler(res, 200, "Users fetched successfully", users);
 });
