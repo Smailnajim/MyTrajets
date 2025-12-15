@@ -54,9 +54,6 @@ router.get('/maintenance-rules', MaintenanceRuleController.getAllRules);
 router.patch('/maintenance-rules/:id', maintenanceRuleValidator.updateRuleValidation, validate, MaintenanceRuleController.updateRule);
 router.delete('/maintenance-rules/:id', MaintenanceRuleController.deleteRule);
 
-router.post('/users/register', tryCatch((req, res)=>{
-    successHandler(res, 200, "use post to create user successfly!", undefined);
-}));
 
 router.post('/maintenances', maintenanceValidator.createMaintenanceValidation, validate, MaintenanceController.createMaintenance);
 router.get('/maintenances', MaintenanceController.getAllMaintenances);
