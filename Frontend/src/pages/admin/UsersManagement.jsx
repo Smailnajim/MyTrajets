@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { acceptUser, getAllRoles, changeUserRole } from '../../services/adminService.js';
 import api from '../../services/api.js';
 
@@ -68,7 +69,12 @@ const UsersManagement = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Users Management</h2>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Users Management</h2>
+                <Link to="/admin/users/new" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition">
+                    + New User
+                </Link>
+            </div>
 
             {error && (
                 <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg mb-4">{error}</div>
@@ -110,8 +116,8 @@ const UsersManagement = () => {
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={`px-2 py-1 rounded text-sm ${user.etat === 'authorise'
-                                            ? 'bg-green-500/20 text-green-300'
-                                            : 'bg-yellow-500/20 text-yellow-300'
+                                        ? 'bg-green-500/20 text-green-300'
+                                        : 'bg-yellow-500/20 text-yellow-300'
                                         }`}>
                                         {user.etat === 'authorise' ? 'Authorized' : 'Pending'}
                                     </span>
