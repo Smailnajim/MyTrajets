@@ -100,9 +100,15 @@ const acceptUserService = async (userId) => {
     return updatedUser;
 };
 
+const getAllUsersService = async () => {
+    const users = await Users.findAllWithFilters();
+    return users;
+};
+
 export default {
     registerService,
     loginService,
     refreshTokenService,
-    acceptUserService
+    acceptUserService,
+    getAllUsersService
 };

@@ -1,9 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import AdminLayout from './layouts/AdminLayout';
+import UsersManagement from './pages/admin/UsersManagement';
+import RolesManagement from './pages/admin/RolesManagement';
+import TrajetsList from './pages/trajets/TrajetsList';
+import TrajetDetail from './pages/trajets/TrajetDetail';
 
 function App() {
   return (
@@ -20,6 +26,29 @@ function App() {
               <Dashboard />
             </ProtectedRoute>
           } />
+
+          {/* Trajets Routes */}
+          <Route path="/trajets" element={
+            <ProtectedRoute>
+              <TrajetsList />
+            </ProtectedRoute>
+          } />
+          <Route path="/trajets/:id" element={
+            <ProtectedRoute>
+              <TrajetDetail />
+            </ProtectedRoute>
+          } />
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
+          }>
+            <Route index element={<Navigate to="/admin/users" replace />} />
+            <Route path="users" element={<UsersManagement />} />
+            <Route path="roles" element={<RolesManagement />} />
+          </Route>
 
           {/* Redirect unknown routes */}
           <Route path="*" element={<Navigate to="/" replace />} />
