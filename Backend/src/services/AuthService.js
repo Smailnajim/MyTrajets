@@ -105,10 +105,43 @@ const getAllUsersService = async () => {
     return users;
 };
 
+const changeUserRoleService = async (userId, roleId) => {
+    const user = await Users.findOneByIdWithRole(userId);
+    if (!user) {
+        throw createError("User not found", 404);
+    }
+    const newRole = await Roles.findOneById(roleId);
+    if (!newRole) {
+        throw createError("Role not found", 404);
+    }
+
+    // Check if user is currently an admin and trying to change to non-admin
+    if (user.roleId?.name === 'admin' && newRole.name !== 'admin') {
+        // Count how many admins exist
+        const adminRole = await Roles.findByName('admin');
+        if (adminRole) {
+            const adminUsers = await Users.findAllWithFilters({ roleId: adminRole._id });
+            if (adminUsers.length <= 1) {
+                throw createError("Cannot change role: This is the last admin in the system", 400);
+            }
+        }
+    }
+
+    const updatedUser = await Users.updateUser(userId, { roleId });
+    return await Users.findOneByIdWithRole(userId);
+};
+
+const getAllRolesService = async () => {
+    const roles = await Roles.findAll();
+    return roles;
+};
+
 export default {
     registerService,
     loginService,
     refreshTokenService,
     acceptUserService,
-    getAllUsersService
+    getAllUsersService,
+    changeUserRoleService,
+    getAllRolesService
 };

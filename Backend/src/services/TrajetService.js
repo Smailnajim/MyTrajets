@@ -50,7 +50,8 @@ const allTrajets = async () => {
  * @returns {Promise<Array>}
  */
 const getTrajet = async (trajetId, user) => {
-    const trajet = await Trajets.findOneById();
+    const trajet = await Trajets.findOneById(trajetId);
+    console.log(trajet)
     if (!trajet) throw createError(`There is no one has this is ${trajetId}`, 404);
 
     const roleName = user.roleId?.name?.toLowerCase();

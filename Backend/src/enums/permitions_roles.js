@@ -6,6 +6,7 @@ const permitions_roles = {
         permitions.update_permissions,
         permitions.show_all_trajets,
         permitions.get_any_trajet,
+        permitions.consomation_total_camion,
     ],
     chauffeur: []
 };

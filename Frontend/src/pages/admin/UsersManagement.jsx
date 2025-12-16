@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
-import { acceptUser } from '../../services/adminService';
-import api from '../../services/api';
+import { Link } from 'react-router-dom';
+import { acceptUser, getAllRoles, changeUserRole } from '../../services/adminService.js';
+import api from '../../services/api.js';
 
 const UsersManagement = () => {
     const [users, setUsers] = useState([]);
+    const [roles, setRoles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
     useEffect(() => {
         fetchUsers();
+        fetchRoles();
     }, []);
 
     const fetchUsers = async () => {
@@ -23,14 +26,35 @@ const UsersManagement = () => {
         }
     };
 
+    const fetchRoles = async () => {
+        try {
+            const response = await getAllRoles();
+            setRoles(response.data || []);
+        } catch (err) {
+            console.error('Failed to fetch roles', err);
+        }
+    };
+
     const handleAccept = async (userId) => {
         try {
             await acceptUser(userId);
             setSuccess('User authorized successfully');
-            fetchUsers(); // Refresh list
+            fetchUsers();
             setTimeout(() => setSuccess(''), 3000);
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to authorize user');
+            setTimeout(() => setError(''), 3000);
+        }
+    };
+
+    const handleRoleChange = async (userId, roleId) => {
+        try {
+            await changeUserRole(userId, roleId);
+            setSuccess('User role updated successfully');
+            fetchUsers();
+            setTimeout(() => setSuccess(''), 3000);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to update user role');
             setTimeout(() => setError(''), 3000);
         }
     };
@@ -45,7 +69,12 @@ const UsersManagement = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold text-white mb-6">Users Management</h2>
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-white">Users Management</h2>
+                <Link to="/admin/users/new" className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium hover:from-purple-700 hover:to-pink-700 transition">
+                    + New User
+                </Link>
+            </div>
 
             {error && (
                 <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg mb-4">{error}</div>
@@ -73,14 +102,22 @@ const UsersManagement = () => {
                                 </td>
                                 <td className="px-6 py-4 text-gray-300">{user.email}</td>
                                 <td className="px-6 py-4">
-                                    <span className="px-2 py-1 bg-purple-500/20 text-purple-300 rounded text-sm capitalize">
-                                        {user.roleId?.name || 'N/A'}
-                                    </span>
+                                    <select
+                                        value={user.roleId?._id || ''}
+                                        onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                                        className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                    >
+                                        {roles.map((role) => (
+                                            <option key={role._id} value={role._id} className="bg-slate-800">
+                                                {role.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={`px-2 py-1 rounded text-sm ${user.etat === 'authorise'
-                                            ? 'bg-green-500/20 text-green-300'
-                                            : 'bg-yellow-500/20 text-yellow-300'
+                                        ? 'bg-green-500/20 text-green-300'
+                                        : 'bg-yellow-500/20 text-yellow-300'
                                         }`}>
                                         {user.etat === 'authorise' ? 'Authorized' : 'Pending'}
                                     </span>

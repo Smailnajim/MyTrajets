@@ -10,6 +10,12 @@ import UsersManagement from './pages/admin/UsersManagement';
 import RolesManagement from './pages/admin/RolesManagement';
 import TrajetsList from './pages/trajets/TrajetsList';
 import TrajetDetail from './pages/trajets/TrajetDetail';
+import CreateVehicle from './pages/admin/CreateVehicle';
+import VehiclesList from './pages/admin/VehiclesList';
+import CreateTrajet from './pages/trajets/CreateTrajet';
+import CreateUser from './pages/admin/CreateUser';
+import MaintenanceRulesManagement from './pages/admin/MaintenanceRulesManagement';
+import MaintenanceManagement from './pages/admin/MaintenanceManagement';
 
 function App() {
   return (
@@ -38,6 +44,11 @@ function App() {
               <TrajetDetail />
             </ProtectedRoute>
           } />
+          <Route path="/trajets/new" element={
+            <ProtectedRoute>
+              <CreateTrajet />
+            </ProtectedRoute>
+          } />
 
           {/* Admin Routes */}
           <Route path="/admin" element={
@@ -47,7 +58,12 @@ function App() {
           }>
             <Route index element={<Navigate to="/admin/users" replace />} />
             <Route path="users" element={<UsersManagement />} />
+            <Route path="users/new" element={<CreateUser />} />
             <Route path="roles" element={<RolesManagement />} />
+            <Route path="vehicles" element={<VehiclesList />} />
+            <Route path="camions/new" element={<CreateVehicle />} />
+            <Route path="maintenance-rules" element={<MaintenanceRulesManagement />} />
+            <Route path="maintenance" element={<MaintenanceManagement />} />
           </Route>
 
           {/* Redirect unknown routes */}
