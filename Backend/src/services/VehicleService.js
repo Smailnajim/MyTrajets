@@ -64,10 +64,25 @@ const getVehicle_s_PneusKilometrage = async (vehicleId) => {
     return await Vehicles.getVehicle_s_PneusKilometrage(vehicleId);
 }
 
+/**
+ * Update a vehicle
+ * @param {String} vehicleId
+ * @param {Object} updateData
+ * @returns {Promise<Object>}
+ */
+const updateVehicle = async (vehicleId, updateData) => {
+    const vehicle = await Vehicles.findOneById(vehicleId);
+    if (!vehicle) {
+        throw createError("Vehicle not found", 404);
+    }
+    return await Vehicles.updateVehicle(vehicleId, updateData);
+}
+
 export default {
     createVehicle,
     getAllVehicles,
     getVehicleById,
     addPneuToVehicle,
-    getVehicle_s_PneusKilometrage
+    getVehicle_s_PneusKilometrage,
+    updateVehicle
 }

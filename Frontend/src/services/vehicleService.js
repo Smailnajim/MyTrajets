@@ -30,3 +30,9 @@ export const getVehiclesByType = async (type) => {
     const response = await api.get(`/vehicles?type=${type}`);
     return response.data;
 };
+
+// Update vehicle
+export const updateVehicle = async (vehicleId, data) => {
+    const response = await api.patch(`/vehicles/${vehicleId}`, data);
+    return response.data;
+};

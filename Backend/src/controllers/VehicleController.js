@@ -54,10 +54,21 @@ const getVehicle_s_PneusKilometrage = tryCatch(async (req, res, next) => {
     successHandler(res, 200, "select kilometrage for vehicl's pneus By successfully", pneus);
 });
 
+/**
+ * Update a vehicle
+ * @route PATCH /api/vehicles/:id
+ */
+const updateVehicle = tryCatch(async (req, res, next) => {
+    const { id } = req.params;
+    const vehicle = await VehicleService.updateVehicle(id, req.body);
+    successHandler(res, 200, "Vehicle updated successfully", vehicle);
+});
+
 export default {
     createVehicle,
     getAllVehicles,
     getVehicleById,
     addPneuToVehicle,
-    getVehicle_s_PneusKilometrage
+    getVehicle_s_PneusKilometrage,
+    updateVehicle
 }

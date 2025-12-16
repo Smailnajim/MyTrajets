@@ -24,28 +24,29 @@ router.get('/', (req, res) => {
 router.post('/users/register', registerValidation, validate, register);
 router.post('/users/login', loginValidation, validate, login);
 router.post('/users/refresh-token', refreshToken);
-router.get('/users',getAllUsers);// isAuth, iCan(permitions.accept_user), 
+router.get('/users', getAllUsers);// isAuth, iCan(permitions.accept_user), 
 router.patch('/users/:id/accept', acceptUser);//isAuth, iCan(permitions.accept_user), 
 router.patch('/users/:id/role', changeUserRole);//isAuth, iCan(permitions.update_permissions), 
 
 router.get('/roles', getAllRoles);//isAuth, 
 router.post('/roles/sync-permissions', syncPermissions);//isAuth, iCan(permitions.update_permissions), 
 
-router.get('/trajets/status/:status',isAuth,TrajetController.getTrajetsByStatus);//  
+router.get('/trajets/status/:status', isAuth, TrajetController.getTrajetsByStatus);//  
 router.get('/camions/kilometrage', TrajetController.getCamionKilometrage);//isAuth, iCan(permitions.getTotalKilometrage), 
 router.get('/remorques/kilometrage', TrajetController.getRemorqueKilometrage);// isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/pneus/kilometrage', TrajetController.getPneuKilometrage);//// isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/vehicle/:id/kilometrage', VehicleController.getVehicle_s_PneusKilometrage);
-router.get('/vehicles',  VehicleController.getAllVehicles);//isAuth,
-router.post('/vehicles',  VehicleController.createVehicle);//isAuth,
-router.get('/vehicles/:id',VehicleController.getVehicleById);// isAuth, 
-router.post('/vehicles/:id/pneus',VehicleController.addPneuToVehicle);
+router.get('/vehicles', VehicleController.getAllVehicles);//isAuth,
+router.post('/vehicles', VehicleController.createVehicle);//isAuth,
+router.get('/vehicles/:id', VehicleController.getVehicleById);// isAuth, 
+router.post('/vehicles/:id/pneus', VehicleController.addPneuToVehicle);
+router.patch('/vehicles/:id', VehicleController.updateVehicle);
 
 // **when get trajet there is a virtual field is consommation**
 router.get('/trajets', TrajetController.getAllTrajets);
 router.get('/trajets/:id', isAuth, TrajetController.getTrajet);
 
-router.get('/camions/:id/carburant',  TrajetController.getCamionConsommation);//isAuth, iCan(permitions.consomation_total_camion),
+router.get('/camions/:id/carburant', TrajetController.getCamionConsommation);//isAuth, iCan(permitions.consomation_total_camion),
 router.get('/camions/:camionId/trajet/:trajetId/carburant', TrajetController.getTrajetConsommation);// isAuth,
 
 router.post('/trajets', trajetValidator.createTrajetValidation, validate, TrajetController.createTrajet);//iCan('create_trajet')
