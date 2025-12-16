@@ -125,7 +125,7 @@ const TrajetsList = () => {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4 text-gray-300">
-                                            {trajet.kilometrage?.arrive ? trajet.kilometrage.arrive - trajet.kilometrage.depart : '-'} km
+                                            {trajet.kilometrage || 0} km
                                         </td>
                                         <td className="px-6 py-4">
                                             <Link

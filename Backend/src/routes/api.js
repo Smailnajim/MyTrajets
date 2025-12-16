@@ -31,7 +31,7 @@ router.patch('/users/:id/role', changeUserRole);//isAuth, iCan(permitions.update
 router.get('/roles', getAllRoles);//isAuth, 
 router.post('/roles/sync-permissions', syncPermissions);//isAuth, iCan(permitions.update_permissions), 
 
-router.get('/trajets/status/:status',TrajetController.getTrajetsByStatus);// isAuth, 
+router.get('/trajets/status/:status',isAuth,TrajetController.getTrajetsByStatus);//  
 router.get('/camions/kilometrage', TrajetController.getCamionKilometrage);//isAuth, iCan(permitions.getTotalKilometrage), 
 router.get('/remorques/kilometrage', TrajetController.getRemorqueKilometrage);// isAuth, iCan(permitions.getTotalKilometrage),
 router.get('/pneus/kilometrage', TrajetController.getPneuKilometrage);//// isAuth, iCan(permitions.getTotalKilometrage),
