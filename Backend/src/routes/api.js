@@ -41,6 +41,7 @@ router.post('/vehicles', VehicleController.createVehicle);//isAuth,
 router.get('/vehicles/:id', VehicleController.getVehicleById);// isAuth, 
 router.post('/vehicles/:id/pneus', VehicleController.addPneuToVehicle);
 router.patch('/vehicles/:id', VehicleController.updateVehicle);
+router.delete('/vehicles/:id', VehicleController.deleteVehicle);
 
 // **when get trajet there is a virtual field is consommation**
 router.get('/trajets', TrajetController.getAllTrajets);
