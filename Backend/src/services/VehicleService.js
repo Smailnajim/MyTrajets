@@ -78,11 +78,25 @@ const updateVehicle = async (vehicleId, updateData) => {
     return await Vehicles.updateVehicle(vehicleId, updateData);
 }
 
+/**
+ * Delete a vehicle
+ * @param {String} vehicleId
+ * @returns {Promise<Object>}
+ */
+const deleteVehicle = async (vehicleId) => {
+    const vehicle = await Vehicles.findOneById(vehicleId);
+    if (!vehicle) {
+        throw createError("Vehicle not found", 404);
+    }
+    return await Vehicles.deleteVehicle(vehicleId);
+}
+
 export default {
     createVehicle,
     getAllVehicles,
     getVehicleById,
     addPneuToVehicle,
     getVehicle_s_PneusKilometrage,
-    updateVehicle
+    updateVehicle,
+    deleteVehicle
 }

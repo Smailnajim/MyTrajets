@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllVehicles, addPneuToVehicle } from '../../services/vehicleService.js';
+import { getAllVehicles, addPneuToVehicle, updateVehicle, deleteVehicle } from '../../services/vehicleService.js';
 import { LoadingSpinner, Alert } from '../../components/ui';
-import { VehicleTable, AddPneuModal, VehicleFilters } from '../../components/vehicles';
+import { VehicleTable, AddPneuModal, EditVehicleModal, VehicleFilters } from '../../components/vehicles';
 
 const VehiclesList = () => {
     const [vehicles, setVehicles] = useState([]);
@@ -10,6 +10,8 @@ const VehiclesList = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [selectedVehicle, setSelectedVehicle] = useState(null);
+    const [editingVehicle, setEditingVehicle] = useState(null);
+    const [saving, setSaving] = useState(false);
     const [typeFilter, setTypeFilter] = useState('all');
     const [statusFilter, setStatusFilter] = useState('all');
     const [pneuForm, setPneuForm] = useState({
@@ -55,6 +57,37 @@ const VehiclesList = () => {
         }
     };
 
+    const handleEditSave = async (formData) => {
+        if (!editingVehicle) return;
+        setSaving(true);
+        try {
+            await updateVehicle(editingVehicle._id, formData);
+            setSuccess('Vehicle updated successfully!');
+            setEditingVehicle(null);
+            fetchVehicles();
+            setTimeout(() => setSuccess(''), 3000);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to update vehicle');
+            setTimeout(() => setError(''), 3000);
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    const handleDelete = async (vehicle) => {
+        if (!window.confirm(`Are you sure you want to delete ${vehicle.plateNumber}?`)) return;
+
+        try {
+            await deleteVehicle(vehicle._id);
+            setSuccess('Vehicle deleted successfully!');
+            fetchVehicles();
+            setTimeout(() => setSuccess(''), 3000);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Failed to delete vehicle');
+            setTimeout(() => setError(''), 3000);
+        }
+    };
+
     if (loading) return <LoadingSpinner />;
 
     return (
@@ -84,7 +117,19 @@ const VehiclesList = () => {
                 onClose={() => setSelectedVehicle(null)}
             />
 
-            <VehicleTable vehicles={vehicles} onAddPneu={setSelectedVehicle} />
+            <EditVehicleModal
+                vehicle={editingVehicle}
+                onClose={() => setEditingVehicle(null)}
+                onSave={handleEditSave}
+                saving={saving}
+            />
+
+            <VehicleTable
+                vehicles={vehicles}
+                onAddPneu={setSelectedVehicle}
+                onEdit={setEditingVehicle}
+                onDelete={handleDelete}
+            />
         </div>
     );
 };

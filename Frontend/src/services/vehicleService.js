@@ -36,3 +36,9 @@ export const updateVehicle = async (vehicleId, data) => {
     const response = await api.patch(`/vehicles/${vehicleId}`, data);
     return response.data;
 };
+
+// Delete vehicle
+export const deleteVehicle = async (vehicleId) => {
+    const response = await api.delete(`/vehicles/${vehicleId}`);
+    return response.data;
+};

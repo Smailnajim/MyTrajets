@@ -64,11 +64,22 @@ const updateVehicle = tryCatch(async (req, res, next) => {
     successHandler(res, 200, "Vehicle updated successfully", vehicle);
 });
 
+/**
+ * Delete a vehicle
+ * @route DELETE /api/vehicles/:id
+ */
+const deleteVehicle = tryCatch(async (req, res, next) => {
+    const { id } = req.params;
+    await VehicleService.deleteVehicle(id);
+    successHandler(res, 200, "Vehicle deleted successfully");
+});
+
 export default {
     createVehicle,
     getAllVehicles,
     getVehicleById,
     addPneuToVehicle,
     getVehicle_s_PneusKilometrage,
-    updateVehicle
+    updateVehicle,
+    deleteVehicle
 }

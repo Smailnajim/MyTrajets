@@ -1,6 +1,6 @@
 import VehicleStatusBadge from './VehicleStatusBadge';
 
-const VehicleTable = ({ vehicles, onAddPneu }) => {
+const VehicleTable = ({ vehicles, onAddPneu, onEdit, onDelete }) => {
     return (
         <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
             <table className="w-full">
@@ -23,12 +23,26 @@ const VehicleTable = ({ vehicles, onAddPneu }) => {
                             <td className="px-6 py-4 text-gray-300">{vehicle.kilometrageTotal} km</td>
                             <td className="px-6 py-4 text-gray-300">{vehicle.pneus?.length || 0}</td>
                             <td className="px-6 py-4">
-                                <button
-                                    onClick={() => onAddPneu(vehicle)}
-                                    className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded border border-purple-500/30 text-sm"
-                                >
-                                    + Add Pneu
-                                </button>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => onAddPneu(vehicle)}
+                                        className="px-2 py-1 bg-purple-500/20 text-purple-300 rounded border border-purple-500/30 text-xs"
+                                    >
+                                        + Pneu
+                                    </button>
+                                    <button
+                                        onClick={() => onEdit(vehicle)}
+                                        className="px-2 py-1 bg-blue-500/20 text-blue-300 rounded border border-blue-500/30 text-xs"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => onDelete(vehicle)}
+                                        className="px-2 py-1 bg-red-500/20 text-red-300 rounded border border-red-500/30 text-xs"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}
