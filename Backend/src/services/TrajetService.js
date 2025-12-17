@@ -51,7 +51,6 @@ const allTrajets = async () => {
  */
 const getTrajet = async (trajetId, user) => {
     const trajet = await Trajets.findOneById(trajetId);
-    console.log(trajet)
     if (!trajet) throw createError(`There is no one has this is ${trajetId}`, 404);
 
     const roleName = user.roleId?.name?.toLowerCase();
@@ -90,7 +89,6 @@ const getTrajetConsommation = async (camionId, trajetId, user = null) => {
     if (!trajet) throw createError(`Trajet ${trajetId} not found for camion ${camionId}`, 404);
 
     const roleName = user?.roleId?.name.toLowerCase();
-    console.log(roleName, "...trajet\n",);
     if (roleName == "chauffeur") {
         if (trajet.chauffeurId._id.toString() != user?.roleId?._id.toString())
             throw createError('this trajet assignd to another chauffeur', 403);
@@ -113,6 +111,9 @@ const createTrajet = async (trajetData) => {
  */
 const updateTrajet = async (trajetData) => {
     const { id, ...dataToUpd} = trajetData;
+    console.log(dataToUpd)
+    await Vehicles.addOnKilometrage(dataToUpd?.camionId, dataToUpd?.kilometrage);
+    await Vehicles.addOnKilometrage(dataToUpd?.remorqueId, dataToUpd?.kilometrage);
     return await Trajets.updateTrajet(id, dataToUpd);
 };
 

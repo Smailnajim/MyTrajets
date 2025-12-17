@@ -1,4 +1,5 @@
 import Vehicle from "../models/Vehicle.js";
+import createError from "../utils/createError.js";
 
 // CREATE
 const createVehicle = async (vehicle) => {
@@ -96,6 +97,16 @@ const updateKilometrage = async (id, kilometrageActuel) => {
         { new: true }
     );
 }
+const addOnKilometrage = async (id, kilometrageActuel) => {
+    const vehicle = await findOneById(id);
+    if(!vehicle) throw createError("this vehicle maybe not existe");
+
+    console.log(vehicle.kilometrageTotal)
+    console.log(kilometrageActuel)
+    vehicle.kilometrageTotal += kilometrageActuel;
+    console.log(vehicle.kilometrageTotal)
+    return await vehicle.save();
+}
 
 const updatePneus = async (id, pneus) => {
     return await Vehicle.findByIdAndUpdate(
@@ -169,5 +180,6 @@ export default {
     removePneu,
     deleteVehicle,
     deleteByPlateNumber,
+    addOnKilometrage,
     deleteMany
 };
