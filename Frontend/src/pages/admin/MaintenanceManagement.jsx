@@ -60,14 +60,29 @@ const MaintenanceManagement = () => {
         }));
     };
 
-    const handleSendToMaintenance = async (vehicleId) => {
+    const handleSendToMaintenance = async (item) => {
         try {
             setError('');
+            const vehicleId = item?.vehicle?.id;
+            const issues = item?.report?.filter(r => r.status === 'warning' || r.status === 'overdue') || [];
+
+            // Create maintenance records for each issue
+            for (const issue of issues) {
+                await createMaintenance({
+                    vehicleId: vehicleId,
+                    type: issue.ruleType,
+                    kmAtMaintenance: issue.currentKm,
+                    cost: 0,
+                    notes: `Auto-created: ${issue.status} - ${issue.distanceSince}/${issue.ruleInterval} km`
+                });
+            }
+
+            // Update vehicle status to maintenance
             await updateVehicle(vehicleId, { status: 'maintenance' });
-            setSuccess('Vehicle sent to maintenance!');
+            setSuccess(`Vehicle sent to maintenance! ${issues.length} maintenance record(s) created.`);
             fetchData();
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to update vehicle status');
+            setError(err.response?.data?.message || 'Failed to send vehicle to maintenance');
         }
     };
 
@@ -160,7 +175,7 @@ const MaintenanceManagement = () => {
                     {activeTab === 'alerts' && (
                         <AlertsTab
                             vehiclesNeedingMaintenance={vehiclesNeedingMaintenance}
-                            onSendToMaintenance={handleSendToMaintenance}
+                            onSendToMaintenance={(item) => handleSendToMaintenance(item)}
                         />
                     )}
                     {activeTab === 'in-maintenance' && (

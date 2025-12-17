@@ -21,7 +21,7 @@ const AlertsTab = ({ vehiclesNeedingMaintenance, onSendToMaintenance }) => {
                             <p className="text-gray-400 text-sm capitalize">{item?.vehicle?.type}</p>
                         </div>
                         <button
-                            onClick={() => onSendToMaintenance(item?.vehicle?.id)}
+                            onClick={() => onSendToMaintenance(item)}
                             className="px-3 py-1.5 bg-orange-500/20 text-orange-300 rounded-lg text-sm hover:bg-orange-500/30 transition border border-orange-500/30"
                         >
                             🔧 Send to Maintenance
