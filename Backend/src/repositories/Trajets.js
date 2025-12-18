@@ -23,7 +23,7 @@ const findOneById = async (id) => {
 }
 
 const findAll = async () => {
-    return await Trajet.find()
+    return await Trajet.find({})
         .populate('chauffeurId', 'firstName lastName email')
         .populate('camionId')
         .populate('remorqueId');

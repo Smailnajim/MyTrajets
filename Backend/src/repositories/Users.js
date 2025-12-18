@@ -18,7 +18,8 @@ const findOneByEmail = async ({ email }) => {
 }
 
 const findOneById = async (id) => {
-    return await User.findById(id);
+    return await User.findById(id)
+    .populate("roleId");
 }
 
 const findAll = async () => {

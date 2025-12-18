@@ -29,3 +29,8 @@ export const syncPermissions = async () => {
     const response = await api.post('/roles/sync-permissions');
     return response.data;
 };
+
+export const changePassword = async (userId, password) => {
+    const response = await api.patch(`/users/${userId}/password`, {password});
+    return response.data;
+};

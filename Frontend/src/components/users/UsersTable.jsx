@@ -1,4 +1,8 @@
+import { useState } from "react";
+import {changePassword} from "./../../services/adminService.js";
+
 const UsersTable = ({ users, roles, onRoleChange, onAccept }) => {
+    const [password, setPass] = useState('');
     return (
         <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
             <table className="w-full">
@@ -46,6 +50,17 @@ const UsersTable = ({ users, roles, onRoleChange, onAccept }) => {
                                         Authorize
                                     </button>
                                 )}
+                                
+                                <input 
+                                type="text"
+                                onChange={(e)=>setPass(e.target.value)}
+                                value={password}
+                                placeholder="password"
+                                />
+
+                                <button
+                                onClick={()=>changePassword(user._id, password)}
+                                >change pass</button>
                             </td>
                         </tr>
                     ))}

@@ -12,7 +12,7 @@ import MaintenanceRuleController from "../controllers/MaintenanceRuleController.
 import maintenanceRuleValidator from "../validators/maintenanceRuleValidator.js";
 import MaintenanceController from "../controllers/MaintenanceController.js";
 import maintenanceValidator from "../validators/maintenanceValidator.js";
-
+import userController from './../controllers/UserControllee.js';
 const router = express.Router();
 
 
@@ -44,7 +44,7 @@ router.patch('/vehicles/:id', VehicleController.updateVehicle);
 router.delete('/vehicles/:id', VehicleController.deleteVehicle);
 
 // **when get trajet there is a virtual field is consommation**
-router.get('/trajets', TrajetController.getAllTrajets);
+router.get('/trajets', isAuth, TrajetController.getAllTrajets);
 router.get('/trajets/:id', isAuth, TrajetController.getTrajet);
 
 router.get('/camions/:id/carburant', TrajetController.getCamionConsommation);//isAuth, iCan(permitions.consomation_total_camion),
@@ -58,6 +58,7 @@ router.get('/users/:id/trajets', TrajetController.getChauffeurTrajets)//  to get
 router.get('/users/trajets', TrajetController.getAllMyTrajets)//isAuth to get my trajets (just fo chauffeur)
 
 router.patch('/users/trajets/:id', trajetValidator.updateTrajetForChauffeurValidation, validate, TrajetController.updateTrajet);//iCan('update_trajet_Chauffeur')
+router.patch('/users/:id/password', userController.updatePassword);
 
 router.post('/Maintenance-rules', maintenanceRuleValidator.createRuleValidation, validate, MaintenanceRuleController.createRule);
 router.get('/maintenance-rules', MaintenanceRuleController.getAllRules);

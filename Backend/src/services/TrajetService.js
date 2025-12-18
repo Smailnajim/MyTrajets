@@ -1,4 +1,5 @@
 import Trajets from "../repositories/Trajets.js";
+import Users from "../repositories/Users.js";
 import Vehicles from "../repositories/Vehicles.js"
 import createError from "../utils/createError.js";
 
@@ -41,8 +42,11 @@ const getPneuKilometrage = async () => {
  * get all Trajets
  * @returns {Promise<Array>}
  */
-const allTrajets = async () => {
-    return await Trajets.findAll();
+const allTrajets = async (chauffeurId) => {
+    const user = await Users.findOneById(chauffeurId);
+    if (user.roleId?.name === "admin") return await Trajets.findAll();
+
+    return await Trajets.findByChauffeur(chauffeurId);
 };
 /**
  * get a Trajet by id
