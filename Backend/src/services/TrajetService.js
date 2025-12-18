@@ -1,4 +1,5 @@
 import Trajets from "../repositories/Trajets.js";
+import Users from "../repositories/Users.js";
 import Vehicles from "../repositories/Vehicles.js"
 import createError from "../utils/createError.js";
 
@@ -41,8 +42,11 @@ const getPneuKilometrage = async () => {
  * get all Trajets
  * @returns {Promise<Array>}
  */
-const allTrajets = async () => {
-    return await Trajets.findAll();
+const allTrajets = async (chauffeurId) => {
+    const user = await Users.findOneById(chauffeurId);
+    if (user.roleId?.name === "admin") return await Trajets.findAll();
+
+    return await Trajets.findByChauffeur(chauffeurId);
 };
 /**
  * get a Trajet by id
@@ -50,7 +54,7 @@ const allTrajets = async () => {
  * @returns {Promise<Array>}
  */
 const getTrajet = async (trajetId, user) => {
-    const trajet = await Trajets.findOneById();
+    const trajet = await Trajets.findOneById(trajetId);
     if (!trajet) throw createError(`There is no one has this is ${trajetId}`, 404);
 
     const roleName = user.roleId?.name?.toLowerCase();
@@ -89,7 +93,6 @@ const getTrajetConsommation = async (camionId, trajetId, user = null) => {
     if (!trajet) throw createError(`Trajet ${trajetId} not found for camion ${camionId}`, 404);
 
     const roleName = user?.roleId?.name.toLowerCase();
-    console.log(roleName, "...trajet\n",);
     if (roleName == "chauffeur") {
         if (trajet.chauffeurId._id.toString() != user?.roleId?._id.toString())
             throw createError('this trajet assignd to another chauffeur', 403);
@@ -112,6 +115,9 @@ const createTrajet = async (trajetData) => {
  */
 const updateTrajet = async (trajetData) => {
     const { id, ...dataToUpd} = trajetData;
+    console.log(dataToUpd)
+    await Vehicles.addOnKilometrage(dataToUpd?.camionId, dataToUpd?.kilometrage);
+    await Vehicles.addOnKilometrage(dataToUpd?.remorqueId, dataToUpd?.kilometrage);
     return await Trajets.updateTrajet(id, dataToUpd);
 };
 

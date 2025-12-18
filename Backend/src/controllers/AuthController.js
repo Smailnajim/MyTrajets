@@ -8,7 +8,7 @@ import tryCatch from "../middlewares/tryCatch.js";
  */
 export const register = tryCatch(async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
-    const user = await AuthService.registerService({ firstName, lastName, email, password});
+    const user = await AuthService.registerService({ firstName, lastName, email, password });
 
     return successHandler(res, 201, "User registered successfully and Wait Admin ACCEPT YOU", user);
 });
@@ -62,4 +62,33 @@ export const acceptUser = tryCatch(async (req, res, next) => {
     const { id } = req.params;
     const user = await AuthService.acceptUserService(id);
     return successHandler(res, 200, "User authorized successfully", user);
+});
+
+/**
+ * Get all users (Admin only)
+ * @route GET /api/users
+ */
+export const getAllUsers = tryCatch(async (req, res, next) => {
+    const users = await AuthService.getAllUsersService();
+    return successHandler(res, 200, "Users fetched successfully", users);
+});
+
+/**
+ * Change user role (Admin only)
+ * @route PATCH /api/users/:id/role
+ */
+export const changeUserRole = tryCatch(async (req, res, next) => {
+    const { id } = req.params;
+    const { roleId } = req.body;
+    const user = await AuthService.changeUserRoleService(id, roleId);
+    return successHandler(res, 200, "User role updated successfully", user);
+});
+
+/**
+ * Get all roles
+ * @route GET /api/roles
+ */
+export const getAllRoles = tryCatch(async (req, res, next) => {
+    const roles = await AuthService.getAllRolesService();
+    return successHandler(res, 200, "Roles fetched successfully", roles);
 });

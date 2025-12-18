@@ -55,7 +55,7 @@ const getPneuKilometrage = tryCatch(async (req, res) => {
  * @route GET /api/trajets
  */
 const getAllTrajets = tryCatch(async (req, res, next) => {
-    const trajets = await TrajetService.allTrajets();
+    const trajets = await TrajetService.allTrajets(req.user._id);
     return successHandler(res, 200, "get trajets by successfully", trajets);
 })
 /**

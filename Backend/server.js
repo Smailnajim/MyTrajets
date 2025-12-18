@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectionDB from "./src/config/db.js";
 import router from "./src/routes/api.js";
@@ -9,8 +10,13 @@ connectionDB();
 
 const app = express();
 
+// CORS configuration
+app.use(cors({
+    origin: 'http://localhost:5173', // Vite dev server
+    credentials: true // Allow cookies
+}));
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 

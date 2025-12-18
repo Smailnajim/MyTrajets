@@ -78,12 +78,9 @@ const updateTrajetValidation = [
     body('emplacement.depart.address')
         .optional()
         .isString().withMessage('Address must be a string'),
-    body('kilometrage.depart')
+    body('kilometrage')
         .optional()
-        .isNumeric().withMessage('Depart kilometrage must be a number'),
-    body('kilometrage.arrive')
-        .optional()
-        .isNumeric().withMessage('Arrival kilometrage must be a number'),
+        .isNumeric().withMessage('Kilometrage must be a number'),
 ];
 
 const updateTrajetForChauffeurValidation = [
@@ -129,12 +126,9 @@ const updateTrajetForChauffeurValidation = [
     // body('emplacement.depart.address')
     //     .optional()
     //     .isString().withMessage('Address must be a string'),
-    body('kilometrage.depart')
+    body('kilometrage')
         .optional()
-        .isNumeric().withMessage('Depart kilometrage must be a number'),
-    body('kilometrage.arrive')
-        .optional()
-        .isNumeric().withMessage('Arrival kilometrage must be a number'),
+        .isNumeric().withMessage('Kilometrage must be a number'),
 ];
 
 export default {
